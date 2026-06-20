@@ -167,6 +167,99 @@ export type Database = {
         }
         Relationships: []
       }
+      coupons: {
+        Row: {
+          code: string
+          created_at: string
+          expires_at: string
+          id: string
+          qr_payload: string
+          redemption_id: string
+          reward_id: string
+          status: string
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          qr_payload: string
+          redemption_id: string
+          reward_id: string
+          status?: string
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          qr_payload?: string
+          redemption_id?: string
+          reward_id?: string
+          status?: string
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coupons_redemption_id_fkey"
+            columns: ["redemption_id"]
+            isOneToOne: false
+            referencedRelation: "redemptions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "coupons_reward_id_fkey"
+            columns: ["reward_id"]
+            isOneToOne: false
+            referencedRelation: "rewards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      membership_tiers: {
+        Row: {
+          benefits: Json
+          color: string | null
+          created_at: string
+          icon: string | null
+          id: string
+          min_lifetime_points: number
+          multiplier: number
+          name: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          benefits?: Json
+          color?: string | null
+          created_at?: string
+          icon?: string | null
+          id?: string
+          min_lifetime_points?: number
+          multiplier?: number
+          name: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          benefits?: Json
+          color?: string | null
+          created_at?: string
+          icon?: string | null
+          id?: string
+          min_lifetime_points?: number
+          multiplier?: number
+          name?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
       point_transactions: {
         Row: {
           amount: number
@@ -353,6 +446,44 @@ export type Database = {
         }
         Relationships: []
       }
+      redemptions: {
+        Row: {
+          created_at: string
+          id: string
+          points_spent: number
+          reward_id: string
+          status: string
+          transaction_id: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          points_spent: number
+          reward_id: string
+          status?: string
+          transaction_id?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          points_spent?: number
+          reward_id?: string
+          status?: string
+          transaction_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "redemptions_reward_id_fkey"
+            columns: ["reward_id"]
+            isOneToOne: false
+            referencedRelation: "rewards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       referrals: {
         Row: {
           code: string
@@ -388,6 +519,139 @@ export type Database = {
           status?: Database["public"]["Enums"]["referral_status"]
         }
         Relationships: []
+      }
+      reward_categories: {
+        Row: {
+          created_at: string
+          icon: string | null
+          id: string
+          name: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          name: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          name?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      reward_inventory: {
+        Row: {
+          remaining_stock: number | null
+          reward_id: string
+          total_stock: number | null
+          updated_at: string
+        }
+        Insert: {
+          remaining_stock?: number | null
+          reward_id: string
+          total_stock?: number | null
+          updated_at?: string
+        }
+        Update: {
+          remaining_stock?: number | null
+          reward_id?: string
+          total_stock?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reward_inventory_reward_id_fkey"
+            columns: ["reward_id"]
+            isOneToOne: true
+            referencedRelation: "rewards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rewards: {
+        Row: {
+          brand: string
+          cash_value: number | null
+          category_id: string | null
+          created_at: string
+          currency: string
+          description: string | null
+          featured: boolean
+          id: string
+          image_url: string | null
+          is_active: boolean
+          is_demo: boolean
+          min_tier: string
+          points_cost: number
+          recommended: boolean
+          redemption_count: number
+          terms: string | null
+          title: string
+          trending: boolean
+          updated_at: string
+          validity_days: number
+        }
+        Insert: {
+          brand: string
+          cash_value?: number | null
+          category_id?: string | null
+          created_at?: string
+          currency?: string
+          description?: string | null
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          is_demo?: boolean
+          min_tier?: string
+          points_cost: number
+          recommended?: boolean
+          redemption_count?: number
+          terms?: string | null
+          title: string
+          trending?: boolean
+          updated_at?: string
+          validity_days?: number
+        }
+        Update: {
+          brand?: string
+          cash_value?: number | null
+          category_id?: string | null
+          created_at?: string
+          currency?: string
+          description?: string | null
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          is_demo?: boolean
+          min_tier?: string
+          points_cost?: number
+          recommended?: boolean
+          redemption_count?: number
+          terms?: string | null
+          title?: string
+          trending?: boolean
+          updated_at?: string
+          validity_days?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rewards_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "reward_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       streaks: {
         Row: {
@@ -524,6 +788,32 @@ export type Database = {
             columns: ["challenge_id"]
             isOneToOne: false
             referencedRelation: "challenges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_rewards: {
+        Row: {
+          favourited_at: string
+          reward_id: string
+          user_id: string
+        }
+        Insert: {
+          favourited_at?: string
+          reward_id: string
+          user_id: string
+        }
+        Update: {
+          favourited_at?: string
+          reward_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_rewards_reward_id_fkey"
+            columns: ["reward_id"]
+            isOneToOne: false
+            referencedRelation: "rewards"
             referencedColumns: ["id"]
           },
         ]
@@ -794,6 +1084,7 @@ export type Database = {
         Returns: undefined
       }
       evaluate_badges: { Args: { _user_id: string }; Returns: undefined }
+      expire_my_coupons: { Args: never; Returns: number }
       points_for_trip: {
         Args: {
           _distance: number
@@ -816,8 +1107,43 @@ export type Database = {
         Returns: number
       }
       redeem_referral: { Args: { _code: string }; Returns: undefined }
+      reward_analytics: {
+        Args: never
+        Returns: {
+          brand: string
+          image_url: string
+          last_redeemed: string
+          points_cost: number
+          redemption_count: number
+          reward_id: string
+          title: string
+        }[]
+      }
       snapshot_rankings: { Args: never; Returns: undefined }
+      spend_points: {
+        Args: { _reward_id: string }
+        Returns: {
+          code: string
+          coupon_id: string
+          expires_at: string
+          new_balance: number
+          points_spent: number
+          qr_payload: string
+          redemption_id: string
+        }[]
+      }
       sync_user_rank: { Args: { _user_id: string }; Returns: undefined }
+      tier_for_points: {
+        Args: { _lifetime: number }
+        Returns: {
+          min_lifetime_points: number
+          multiplier: number
+          name: string
+          next_slug: string
+          next_threshold: number
+          slug: string
+        }[]
+      }
       update_streak: {
         Args: { _date: string; _user_id: string }
         Returns: undefined
@@ -841,6 +1167,7 @@ export type Database = {
         | "bonus"
         | "manual"
         | "social"
+        | "redemption"
       referral_status: "pending" | "completed"
       transport_mode:
         | "walk"
@@ -997,6 +1324,7 @@ export const Constants = {
         "bonus",
         "manual",
         "social",
+        "redemption",
       ],
       referral_status: ["pending", "completed"],
       transport_mode: [
