@@ -14,11 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      carbon_logs: {
+        Row: {
+          created_at: string
+          daily_co2: number
+          date: string
+          id: string
+          monthly_co2: number
+          total_co2_saved: number
+          updated_at: string
+          user_id: string
+          weekly_co2: number
+        }
+        Insert: {
+          created_at?: string
+          daily_co2?: number
+          date?: string
+          id?: string
+          monthly_co2?: number
+          total_co2_saved?: number
+          updated_at?: string
+          user_id: string
+          weekly_co2?: number
+        }
+        Update: {
+          created_at?: string
+          daily_co2?: number
+          date?: string
+          id?: string
+          monthly_co2?: number
+          total_co2_saved?: number
+          updated_at?: string
+          user_id?: string
+          weekly_co2?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           area: string | null
           city: string | null
           created_at: string
+          current_rank: number | null
           email: string | null
           green_points: number
           id: string
@@ -35,6 +72,7 @@ export type Database = {
           area?: string | null
           city?: string | null
           created_at?: string
+          current_rank?: number | null
           email?: string | null
           green_points?: number
           id: string
@@ -51,6 +89,7 @@ export type Database = {
           area?: string | null
           city?: string | null
           created_at?: string
+          current_rank?: number | null
           email?: string | null
           green_points?: number
           id?: string
@@ -65,6 +104,81 @@ export type Database = {
         }
         Relationships: []
       }
+      trips: {
+        Row: {
+          co2_generated: number
+          co2_saved: number
+          created_at: string
+          distance_km: number
+          duration_minutes: number
+          id: string
+          notes: string | null
+          transport_mode: Database["public"]["Enums"]["transport_mode"]
+          trip_date: string
+          user_id: string
+          verification_type: Database["public"]["Enums"]["verification_type"]
+        }
+        Insert: {
+          co2_generated?: number
+          co2_saved?: number
+          created_at?: string
+          distance_km?: number
+          duration_minutes?: number
+          id?: string
+          notes?: string | null
+          transport_mode: Database["public"]["Enums"]["transport_mode"]
+          trip_date?: string
+          user_id: string
+          verification_type?: Database["public"]["Enums"]["verification_type"]
+        }
+        Update: {
+          co2_generated?: number
+          co2_saved?: number
+          created_at?: string
+          distance_km?: number
+          duration_minutes?: number
+          id?: string
+          notes?: string | null
+          transport_mode?: Database["public"]["Enums"]["transport_mode"]
+          trip_date?: string
+          user_id?: string
+          verification_type?: Database["public"]["Enums"]["verification_type"]
+        }
+        Relationships: []
+      }
+      user_statistics: {
+        Row: {
+          badge_count: number
+          challenge_count: number
+          total_co2: number
+          total_distance: number
+          total_saved: number
+          total_trips: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          badge_count?: number
+          challenge_count?: number
+          total_co2?: number
+          total_distance?: number
+          total_saved?: number
+          total_trips?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          badge_count?: number
+          challenge_count?: number
+          total_co2?: number
+          total_distance?: number
+          total_saved?: number
+          total_trips?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -73,7 +187,16 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      transport_mode:
+        | "walk"
+        | "cycle"
+        | "bike"
+        | "bus"
+        | "metro"
+        | "car"
+        | "ev"
+        | "auto"
+      verification_type: "manual" | "gps" | "ticket" | "receipt"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -200,6 +323,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      transport_mode: [
+        "walk",
+        "cycle",
+        "bike",
+        "bus",
+        "metro",
+        "car",
+        "ev",
+        "auto",
+      ],
+      verification_type: ["manual", "gps", "ticket", "receipt"],
+    },
   },
 } as const
