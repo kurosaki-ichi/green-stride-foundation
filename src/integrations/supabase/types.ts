@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      achievement_history: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          points_awarded: number
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          points_awarded?: number
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          points_awarded?: number
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      badges: {
+        Row: {
+          code: string
+          created_at: string
+          criteria_metric: string
+          criteria_value: number
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+          reward: number
+          tier: Database["public"]["Enums"]["badge_tier"]
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          criteria_metric: string
+          criteria_value: number
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          reward?: number
+          tier?: Database["public"]["Enums"]["badge_tier"]
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          criteria_metric?: string
+          criteria_value?: number
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          reward?: number
+          tier?: Database["public"]["Enums"]["badge_tier"]
+        }
+        Relationships: []
+      }
       carbon_logs: {
         Row: {
           created_at: string
@@ -47,6 +116,114 @@ export type Database = {
           updated_at?: string
           user_id?: string
           weekly_co2?: number
+        }
+        Relationships: []
+      }
+      challenges: {
+        Row: {
+          code: string
+          created_at: string
+          description: string | null
+          ends_at: string | null
+          icon: string | null
+          id: string
+          is_active: boolean
+          metric: Database["public"]["Enums"]["challenge_metric"]
+          reward: number
+          starts_at: string | null
+          target: number
+          title: string
+          type: Database["public"]["Enums"]["challenge_type"]
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          description?: string | null
+          ends_at?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          metric: Database["public"]["Enums"]["challenge_metric"]
+          reward?: number
+          starts_at?: string | null
+          target: number
+          title: string
+          type: Database["public"]["Enums"]["challenge_type"]
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          description?: string | null
+          ends_at?: string | null
+          icon?: string | null
+          id?: string
+          is_active?: boolean
+          metric?: Database["public"]["Enums"]["challenge_metric"]
+          reward?: number
+          starts_at?: string | null
+          target?: number
+          title?: string
+          type?: Database["public"]["Enums"]["challenge_type"]
+        }
+        Relationships: []
+      }
+      point_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          id: string
+          source: Database["public"]["Enums"]["point_source"]
+          source_id: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          source: Database["public"]["Enums"]["point_source"]
+          source_id?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          source?: Database["public"]["Enums"]["point_source"]
+          source_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      points_wallet: {
+        Row: {
+          balance: number
+          lifetime_earned: number
+          lifetime_spent: number
+          month_anchor: string
+          month_earned: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          balance?: number
+          lifetime_earned?: number
+          lifetime_spent?: number
+          month_anchor?: string
+          month_earned?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          balance?: number
+          lifetime_earned?: number
+          lifetime_spent?: number
+          month_anchor?: string
+          month_earned?: number
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -137,6 +314,66 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          code: string
+          completed_at: string | null
+          created_at: string
+          id: string
+          points_awarded: number
+          referred_email: string | null
+          referred_user_id: string | null
+          referrer_id: string
+          status: Database["public"]["Enums"]["referral_status"]
+        }
+        Insert: {
+          code: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          points_awarded?: number
+          referred_email?: string | null
+          referred_user_id?: string | null
+          referrer_id: string
+          status?: Database["public"]["Enums"]["referral_status"]
+        }
+        Update: {
+          code?: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          points_awarded?: number
+          referred_email?: string | null
+          referred_user_id?: string | null
+          referrer_id?: string
+          status?: Database["public"]["Enums"]["referral_status"]
+        }
+        Relationships: []
+      }
+      streaks: {
+        Row: {
+          current_streak: number
+          last_activity_date: string | null
+          longest_streak: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          current_streak?: number
+          last_activity_date?: string | null
+          longest_streak?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          current_streak?: number
+          last_activity_date?: string | null
+          longest_streak?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       trips: {
         Row: {
           co2_generated: number
@@ -178,6 +415,79 @@ export type Database = {
           verification_type?: Database["public"]["Enums"]["verification_type"]
         }
         Relationships: []
+      }
+      user_badges: {
+        Row: {
+          badge_id: string
+          earned_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          badge_id: string
+          earned_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          badge_id?: string
+          earned_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_badges_badge_id_fkey"
+            columns: ["badge_id"]
+            isOneToOne: false
+            referencedRelation: "badges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_challenges: {
+        Row: {
+          challenge_id: string
+          claimed_at: string | null
+          completed: boolean
+          completed_at: string | null
+          id: string
+          period_start: string
+          progress: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          challenge_id: string
+          claimed_at?: string | null
+          completed?: boolean
+          completed_at?: string | null
+          id?: string
+          period_start?: string
+          progress?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          challenge_id?: string
+          claimed_at?: string | null
+          completed?: boolean
+          completed_at?: string | null
+          id?: string
+          period_start?: string
+          progress?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_challenges_challenge_id_fkey"
+            columns: ["challenge_id"]
+            isOneToOne: false
+            referencedRelation: "challenges"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_statistics: {
         Row: {
@@ -368,10 +678,52 @@ export type Database = {
           total_saved: number
         }[]
       }
+      award_points: {
+        Args: {
+          _amount: number
+          _description?: string
+          _source: Database["public"]["Enums"]["point_source"]
+          _source_id?: string
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      evaluate_badges: { Args: { _user_id: string }; Returns: undefined }
+      points_for_trip: {
+        Args: {
+          _distance: number
+          _mode: Database["public"]["Enums"]["transport_mode"]
+        }
+        Returns: number
+      }
+      recompute_challenges: { Args: { _user_id: string }; Returns: undefined }
+      redeem_referral: { Args: { _code: string }; Returns: undefined }
       snapshot_rankings: { Args: never; Returns: undefined }
       sync_user_rank: { Args: { _user_id: string }; Returns: undefined }
+      update_streak: {
+        Args: { _date: string; _user_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
+      badge_tier: "bronze" | "silver" | "gold" | "platinum"
+      challenge_metric:
+        | "distance_walk"
+        | "distance_cycle"
+        | "trips_public"
+        | "trips_total"
+        | "co2_saved"
+        | "distance_total"
+      challenge_type: "daily" | "weekly" | "monthly" | "seasonal"
+      point_source:
+        | "trip"
+        | "challenge"
+        | "badge"
+        | "referral"
+        | "bonus"
+        | "manual"
+        | "social"
+      referral_status: "pending" | "completed"
       transport_mode:
         | "walk"
         | "cycle"
@@ -509,6 +861,26 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      badge_tier: ["bronze", "silver", "gold", "platinum"],
+      challenge_metric: [
+        "distance_walk",
+        "distance_cycle",
+        "trips_public",
+        "trips_total",
+        "co2_saved",
+        "distance_total",
+      ],
+      challenge_type: ["daily", "weekly", "monthly", "seasonal"],
+      point_source: [
+        "trip",
+        "challenge",
+        "badge",
+        "referral",
+        "bonus",
+        "manual",
+        "social",
+      ],
+      referral_status: ["pending", "completed"],
       transport_mode: [
         "walk",
         "cycle",

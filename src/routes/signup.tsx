@@ -37,6 +37,8 @@ function SignupPage() {
       toast.success("Check your email to confirm your account.");
       return;
     }
+    const ref = new URLSearchParams(window.location.search).get("ref");
+    if (ref) { try { await supabase.rpc("redeem_referral", { _code: ref }); } catch { /* ignore */ } }
     toast.success("Account created!");
     window.location.assign("/onboarding");
   }
