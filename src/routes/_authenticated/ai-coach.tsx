@@ -40,7 +40,7 @@ function AICoachPage() {
 
   const transport = new DefaultChatTransport({
     api: "/api/chat",
-    headers: () => (token ? { Authorization: `Bearer ${token}` } : {}),
+    headers: (): Record<string, string> => (token ? { Authorization: `Bearer ${token}` } : {}),
   });
 
   const { messages, sendMessage, status, error } = useChat({
