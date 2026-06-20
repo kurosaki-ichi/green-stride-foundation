@@ -44,6 +44,7 @@ const PALETTE = [
 ];
 
 function Dashboard() {
+  const navigate = useNavigate();
   const { theme, toggle } = useTheme();
   const { profile, loading: pLoading } = useProfile();
   const { stats, carbon, loading: sLoading } = useStats();
