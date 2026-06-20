@@ -45,6 +45,10 @@ function Dashboard() {
   const { data: transport, loading: tLoading } = useTransportBreakdown();
   const { row: myRank, loading: rLoading } = useMyRanks(profile?.id);
   const { rows: history } = useRankHistory(profile?.id, "global");
+  const { wallet } = useWallet();
+  const { streak } = useStreak();
+  const { items: challenges } = useChallenges();
+  const nextChallenge = challenges.find((c) => !c.completed);
 
   const firstName = profile?.name?.split(" ")[0] || "there";
 
