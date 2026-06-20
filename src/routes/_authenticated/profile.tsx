@@ -79,9 +79,12 @@ function ProfilePage() {
       </div>
 
       <div className="mt-5 space-y-2">
+        <Row to="/wallet" icon={Wallet} label="Green wallet" value="Points & transactions" />
+        <Row to="/badges" icon={Award} label="Badges" value="Your achievements" />
+        <Row to="/referrals" icon={Users} label="Refer friends" value="Earn 100 pts each" />
+        <Row icon={Flame} label="Current streak" value={`${streak?.current_streak ?? 0} days · best ${streak?.longest_streak ?? 0}`} />
         <Row to="/edit-profile" icon={Pencil} label="Edit profile" value="Name, location, photo" />
         <Row to="/trips" icon={Activity} label="Trip history" value={`${stats?.total_trips ?? 0} logged`} />
-        <Row icon={Award} label="Achievements" value="Coming soon" />
         <Row icon={MapPin} label="Location" value={profile?.city ?? "Not set"} />
       </div>
 
