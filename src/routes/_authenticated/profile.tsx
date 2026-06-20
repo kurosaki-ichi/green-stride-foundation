@@ -8,7 +8,8 @@ import { useProfile } from "@/hooks/use-profile";
 import { useStats } from "@/hooks/use-stats";
 import { useTrips } from "@/hooks/use-trips";
 import { TRANSPORT_LABELS, type TransportMode } from "@/lib/carbon";
-import { LogOut, ChevronRight, MapPin, Pencil, Award, Activity } from "lucide-react";
+import { LogOut, ChevronRight, MapPin, Pencil, Award, Activity, Wallet, Users, Flame } from "lucide-react";
+import { useStreak } from "@/hooks/use-gamification";
 
 export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({ meta: [{ title: "Profile — EcoRewards AI" }] }),
