@@ -107,7 +107,7 @@ function PublicProfilePage() {
       </div>
 
       {transportData.length > 0 && (
-        <ChartCard title="Transport breakdown" description={data.is_demo ? "Lifetime split" : "Last 30 days"} className="mt-4">
+        <ChartCard title="Transport breakdown" description={data.is_demo ? "Lifetime split" : "Last 30 days"}>
           <div className="flex items-center gap-4">
             <div className="h-36 w-36 shrink-0">
               <ResponsiveContainer width="100%" height="100%">
@@ -131,7 +131,7 @@ function PublicProfilePage() {
         </ChartCard>
       )}
 
-      <ChartCard title="Verification" description="How this user's activity is verified" className="mt-4">
+      <ChartCard title="Verification" description="How this user's activity is verified">
         <div className="space-y-2.5">
           <Bar label="Account trust" value={data.trust_score} color="bg-emerald-500" />
           <Bar label="Activity verified" value={data.verified_pct} color="bg-sky-500" />
@@ -143,7 +143,7 @@ function PublicProfilePage() {
       </ChartCard>
 
       {Array.isArray(data.badges) && data.badges.length > 0 && (
-        <ChartCard title={`Badges (${data.badges.length})`} className="mt-4">
+        <ChartCard title={`Badges (${data.badges.length})`}>
           <div className="flex flex-wrap gap-2">
             {data.badges.map((b: any) => (
               <span key={b.id} className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
@@ -155,7 +155,7 @@ function PublicProfilePage() {
       )}
 
       {Array.isArray(data.recent_activity) && data.recent_activity.length > 0 && (
-        <ChartCard title="Recent achievements" className="mt-4">
+        <ChartCard title="Recent achievements">
           <ul className="divide-y divide-border">
             {data.recent_activity.slice(0, 5).map((a: any, i: number) => (
               <li key={i} className="flex items-center gap-2 py-2">

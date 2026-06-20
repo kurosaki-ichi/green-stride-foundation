@@ -34,6 +34,7 @@ import { Route as AuthenticatedChallengesRouteImport } from './routes/_authentic
 import { Route as AuthenticatedBadgesRouteImport } from './routes/_authenticated/badges'
 import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
 import { Route as AuthenticatedAiCoachRouteImport } from './routes/_authenticated/ai-coach'
+import { Route as AuthenticatedUserIdRouteImport } from './routes/_authenticated/user.$id'
 import { Route as AuthenticatedCouponsIdRouteImport } from './routes/_authenticated/coupons.$id'
 
 const SignupRoute = SignupRouteImport.update({
@@ -163,6 +164,11 @@ const AuthenticatedAiCoachRoute = AuthenticatedAiCoachRouteImport.update({
   path: '/ai-coach',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedUserIdRoute = AuthenticatedUserIdRouteImport.update({
+  id: '/user/$id',
+  path: '/user/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedCouponsIdRoute = AuthenticatedCouponsIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -195,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/wallet': typeof AuthenticatedWalletRoute
   '/api/chat': typeof ApiChatRoute
   '/coupons/$id': typeof AuthenticatedCouponsIdRoute
+  '/user/$id': typeof AuthenticatedUserIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -222,6 +229,7 @@ export interface FileRoutesByTo {
   '/wallet': typeof AuthenticatedWalletRoute
   '/api/chat': typeof ApiChatRoute
   '/coupons/$id': typeof AuthenticatedCouponsIdRoute
+  '/user/$id': typeof AuthenticatedUserIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -251,6 +259,7 @@ export interface FileRoutesById {
   '/_authenticated/wallet': typeof AuthenticatedWalletRoute
   '/api/chat': typeof ApiChatRoute
   '/_authenticated/coupons/$id': typeof AuthenticatedCouponsIdRoute
+  '/_authenticated/user/$id': typeof AuthenticatedUserIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -280,6 +289,7 @@ export interface FileRouteTypes {
     | '/wallet'
     | '/api/chat'
     | '/coupons/$id'
+    | '/user/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -307,6 +317,7 @@ export interface FileRouteTypes {
     | '/wallet'
     | '/api/chat'
     | '/coupons/$id'
+    | '/user/$id'
   id:
     | '__root__'
     | '/'
@@ -335,6 +346,7 @@ export interface FileRouteTypes {
     | '/_authenticated/wallet'
     | '/api/chat'
     | '/_authenticated/coupons/$id'
+    | '/_authenticated/user/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -523,6 +535,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAiCoachRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/user/$id': {
+      id: '/_authenticated/user/$id'
+      path: '/user/$id'
+      fullPath: '/user/$id'
+      preLoaderRoute: typeof AuthenticatedUserIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/coupons/$id': {
       id: '/_authenticated/coupons/$id'
       path: '/$id'
@@ -564,6 +583,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedTripsRoute: typeof AuthenticatedTripsRoute
   AuthenticatedVerificationRoute: typeof AuthenticatedVerificationRoute
   AuthenticatedWalletRoute: typeof AuthenticatedWalletRoute
+  AuthenticatedUserIdRoute: typeof AuthenticatedUserIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -586,6 +606,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedTripsRoute: AuthenticatedTripsRoute,
   AuthenticatedVerificationRoute: AuthenticatedVerificationRoute,
   AuthenticatedWalletRoute: AuthenticatedWalletRoute,
+  AuthenticatedUserIdRoute: AuthenticatedUserIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
