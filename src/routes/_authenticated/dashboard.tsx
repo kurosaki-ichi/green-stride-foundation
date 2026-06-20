@@ -194,6 +194,30 @@ function Dashboard() {
         </Link>
       )}
 
+      {(recentPost || topGoal) && (
+        <section className="mt-4">
+          <div className="mb-2 flex items-center justify-between">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Community</h3>
+            <Link to="/community" className="text-xs font-medium text-primary">Open feed →</Link>
+          </div>
+          <div className="space-y-3">
+            {topGoal && <CommunityChallengeCard c={topGoal} />}
+            {recentPost && (
+              <Link to="/community" className="block rounded-2xl bg-card p-4 shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)]">
+                <div className="flex items-center gap-2">
+                  <span className="rounded-lg bg-primary/10 p-1.5 text-primary"><Users className="h-4 w-4" /></span>
+                  <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Latest in your community</p>
+                </div>
+                <p className="mt-2 line-clamp-2 text-sm">
+                  <span className="font-semibold">{recentPost.author_name}</span>{" "}
+                  <span className="text-muted-foreground">{recentPost.body ?? "shared an achievement"}</span>
+                </p>
+              </Link>
+            )}
+          </div>
+        </section>
+      )}
+
       <div className="mt-5 space-y-4">
         <ChartCard title="Weekly trend" description="CO₂ emitted, last 7 days">
           {wLoading ? (
