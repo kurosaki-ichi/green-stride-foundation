@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import { StatCard } from "@/components/cards/StatCard";
 import { ChartCard } from "@/components/cards/ChartCard";
@@ -18,9 +18,12 @@ import { useProfile } from "@/hooks/use-profile";
 import { useStats, useWeeklyTrend, useTransportBreakdown } from "@/hooks/use-stats";
 import { useMyRanks, useRankHistory } from "@/hooks/use-rankings";
 import { useWallet, useStreak, useChallenges } from "@/hooks/use-gamification";
+import { useRewardsCatalog, useMyTier, useRedemptions } from "@/hooks/use-rewards";
 import { RankWidget } from "@/components/cards/RankWidget";
 import { TrustScoreCard } from "@/components/cards/TrustScoreCard";
 import { LocationInsightsCard } from "@/components/cards/LocationInsightsCard";
+import { TierCard } from "@/components/cards/TierCard";
+import { RewardCard } from "@/components/cards/RewardCard";
 import { useAreaStats } from "@/hooks/use-rankings";
 import { Progress } from "@/components/ui/progress";
 
@@ -41,6 +44,7 @@ const PALETTE = [
 ];
 
 function Dashboard() {
+  const navigate = useNavigate();
   const { theme, toggle } = useTheme();
   const { profile, loading: pLoading } = useProfile();
   const { stats, carbon, loading: sLoading } = useStats();
@@ -52,6 +56,11 @@ function Dashboard() {
   const { streak } = useStreak();
   const { items: challenges } = useChallenges();
   const { rows: areaRows } = useAreaStats();
+  const { rewards } = useRewardsCatalog();
+  const { items: redemptions } = useRedemptions();
+  const tier = useMyTier(wallet?.lifetime_earned ?? 0);
+  const featuredRewards = rewards.filter((r) => r.featured || r.recommended).slice(0, 4);
+  const lastRedemption = redemptions[0];
   const nextChallenge = challenges.find((c) => !c.completed);
   const myArea = areaRows.find(
     (a) => a.area === profile?.area && a.city === profile?.city && a.state === profile?.state,
@@ -115,6 +124,50 @@ function Dashboard() {
           areaRank={myArea?.rank ?? null}
         />
       </div>
+
+      {tier && (
+        <div className="mt-3">
+          <Link to="/membership" className="block">
+            <TierCard current={tier.current} next={tier.next} progress={tier.progress} remaining={tier.remaining} compact />
+          </Link>
+        </div>
+      )}
+
+      {lastRedemption && (
+        <Link
+          to="/coupons"
+          className="mt-3 flex items-center gap-3 rounded-2xl bg-card p-3 shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)]"
+        >
+          <span className="rounded-lg bg-primary/10 p-2 text-primary"><Sparkles className="h-4 w-4" /></span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Recent redemption</p>
+            <p className="truncate text-sm font-semibold">{lastRedemption.rewards?.title ?? "Reward"}</p>
+          </div>
+          <span className="text-xs font-semibold text-destructive">−{lastRedemption.points_spent}</span>
+          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+        </Link>
+      )}
+
+      {featuredRewards.length > 0 && (
+        <section className="mt-5">
+          <div className="mb-2 flex items-center justify-between">
+            <h2 className="text-sm font-semibold">Available rewards</h2>
+            <Link to="/rewards" className="text-xs font-medium text-primary">See all →</Link>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {featuredRewards.map((r) => (
+              <RewardCard
+                key={r.id} title={r.title} brand={r.brand} description={r.description}
+                cost={r.points_cost} balance={wallet?.balance ?? 0}
+                trending={r.trending} featured={r.featured} recommended={r.recommended}
+                remainingStock={r.reward_inventory?.remaining_stock ?? null}
+                imageUrl={r.image_url} categoryName={r.reward_categories?.name}
+                onClick={() => navigate({ to: "/rewards" })}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       {nextChallenge && (
         <Link to="/challenges" className="mt-3 block rounded-2xl bg-card p-4 shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)]">
