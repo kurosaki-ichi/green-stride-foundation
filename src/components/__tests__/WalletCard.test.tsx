@@ -7,7 +7,8 @@ const wallet: any = { balance: 1234, lifetime_earned: 5000, month_earned: 200, l
 describe("WalletCard", () => {
   it("renders zero balance when wallet is null", () => {
     render(<WalletCard wallet={null} />);
-    expect(screen.getByText("0")).toBeInTheDocument();
+    expect(screen.getByText(/Green wallet/i)).toBeInTheDocument();
+    expect(screen.getAllByText("0").length).toBeGreaterThan(0);
   });
   it("renders formatted balance and mini stats", () => {
     render(<WalletCard wallet={wallet} />);

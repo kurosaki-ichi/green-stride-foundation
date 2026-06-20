@@ -18,8 +18,10 @@ describe("LeaderboardCard", () => {
     expect(screen.getByText(/Trust 91/)).toBeInTheDocument();
   });
   it("renders avatar img with empty alt when avatar URL provided", () => {
-    render(<LeaderboardCard rank={1} name="x" points={1} avatar="/a.png" />);
-    expect(screen.getByRole("img")).toHaveAttribute("alt", "");
+    const { container } = render(<LeaderboardCard rank={1} name="x" points={1} avatar="/a.png" />);
+    const img = container.querySelector("img");
+    expect(img).toBeInTheDocument();
+    expect(img).toHaveAttribute("alt", "");
   });
   it("shows trend arrows", () => {
     const { rerender } = render(<LeaderboardCard rank={1} name="x" points={1} trend="up" trendDelta={3} />);
