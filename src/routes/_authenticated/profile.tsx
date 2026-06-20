@@ -21,6 +21,7 @@ function ProfilePage() {
   const { profile, loading } = useProfile();
   const { stats } = useStats();
   const { trips } = useTrips(3);
+  const { streak } = useStreak();
 
   async function signOut() {
     await supabase.auth.signOut();
