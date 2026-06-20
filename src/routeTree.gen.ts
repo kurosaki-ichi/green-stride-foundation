@@ -26,6 +26,7 @@ import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authentic
 import { Route as AuthenticatedMembershipRouteImport } from './routes/_authenticated/membership'
 import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
 import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
+import { Route as AuthenticatedImpactGlobeRouteImport } from './routes/_authenticated/impact-globe'
 import { Route as AuthenticatedEditProfileRouteImport } from './routes/_authenticated/edit-profile'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCouponsRouteImport } from './routes/_authenticated/coupons'
@@ -123,6 +124,12 @@ const AuthenticatedInsightsRoute = AuthenticatedInsightsRouteImport.update({
   path: '/insights',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedImpactGlobeRoute =
+  AuthenticatedImpactGlobeRouteImport.update({
+    id: '/impact-globe',
+    path: '/impact-globe',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedEditProfileRoute =
   AuthenticatedEditProfileRouteImport.update({
     id: '/edit-profile',
@@ -188,6 +195,7 @@ export interface FileRoutesByFullPath {
   '/coupons': typeof AuthenticatedCouponsRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/edit-profile': typeof AuthenticatedEditProfileRoute
+  '/impact-globe': typeof AuthenticatedImpactGlobeRoute
   '/insights': typeof AuthenticatedInsightsRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/membership': typeof AuthenticatedMembershipRoute
@@ -216,6 +224,7 @@ export interface FileRoutesByTo {
   '/coupons': typeof AuthenticatedCouponsRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/edit-profile': typeof AuthenticatedEditProfileRoute
+  '/impact-globe': typeof AuthenticatedImpactGlobeRoute
   '/insights': typeof AuthenticatedInsightsRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/membership': typeof AuthenticatedMembershipRoute
@@ -246,6 +255,7 @@ export interface FileRoutesById {
   '/_authenticated/coupons': typeof AuthenticatedCouponsRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/edit-profile': typeof AuthenticatedEditProfileRoute
+  '/_authenticated/impact-globe': typeof AuthenticatedImpactGlobeRoute
   '/_authenticated/insights': typeof AuthenticatedInsightsRoute
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/_authenticated/membership': typeof AuthenticatedMembershipRoute
@@ -276,6 +286,7 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/dashboard'
     | '/edit-profile'
+    | '/impact-globe'
     | '/insights'
     | '/leaderboard'
     | '/membership'
@@ -304,6 +315,7 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/dashboard'
     | '/edit-profile'
+    | '/impact-globe'
     | '/insights'
     | '/leaderboard'
     | '/membership'
@@ -333,6 +345,7 @@ export interface FileRouteTypes {
     | '/_authenticated/coupons'
     | '/_authenticated/dashboard'
     | '/_authenticated/edit-profile'
+    | '/_authenticated/impact-globe'
     | '/_authenticated/insights'
     | '/_authenticated/leaderboard'
     | '/_authenticated/membership'
@@ -479,6 +492,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInsightsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/impact-globe': {
+      id: '/_authenticated/impact-globe'
+      path: '/impact-globe'
+      fullPath: '/impact-globe'
+      preLoaderRoute: typeof AuthenticatedImpactGlobeRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/edit-profile': {
       id: '/_authenticated/edit-profile'
       path: '/edit-profile'
@@ -572,6 +592,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCouponsRoute: typeof AuthenticatedCouponsRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEditProfileRoute: typeof AuthenticatedEditProfileRoute
+  AuthenticatedImpactGlobeRoute: typeof AuthenticatedImpactGlobeRoute
   AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
   AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
   AuthenticatedMembershipRoute: typeof AuthenticatedMembershipRoute
@@ -595,6 +616,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCouponsRoute: AuthenticatedCouponsRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEditProfileRoute: AuthenticatedEditProfileRoute,
+  AuthenticatedImpactGlobeRoute: AuthenticatedImpactGlobeRoute,
   AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
   AuthenticatedLeaderboardRoute: AuthenticatedLeaderboardRoute,
   AuthenticatedMembershipRoute: AuthenticatedMembershipRoute,
