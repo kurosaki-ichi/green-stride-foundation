@@ -31,7 +31,7 @@ describe("useTrips", () => {
     const maybeSingle = vi.fn().mockResolvedValue({ data: { id: "t1" }, error: null });
     const eq = vi.fn().mockReturnThis();
     const order = vi.fn().mockReturnThis();
-    let qResult: any = { data: [], error: null };
+    const qResult: any = { data: [], error: null };
     (supabase.from as any) = vi.fn(() => ({
       select: vi.fn(() => ({
         eq, order, limit: vi.fn().mockReturnThis(), then: (cb: any) => Promise.resolve(qResult).then(cb),
