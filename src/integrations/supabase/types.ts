@@ -167,6 +167,169 @@ export type Database = {
         }
         Relationships: []
       }
+      comment_likes: {
+        Row: {
+          comment_id: string
+          created_at: string
+          user_id: string
+        }
+        Insert: {
+          comment_id: string
+          created_at?: string
+          user_id: string
+        }
+        Update: {
+          comment_id?: string
+          created_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comment_likes_comment_id_fkey"
+            columns: ["comment_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      comments: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          is_hidden: boolean
+          like_count: number
+          parent_id: string | null
+          post_id: string
+          reported_count: number
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          is_hidden?: boolean
+          like_count?: number
+          parent_id?: string | null
+          post_id: string
+          reported_count?: number
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          is_hidden?: boolean
+          like_count?: number
+          parent_id?: string | null
+          post_id?: string
+          reported_count?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_challenges: {
+        Row: {
+          area: string | null
+          city: string | null
+          created_at: string
+          current_progress: number
+          description: string | null
+          ends_at: string | null
+          id: string
+          is_active: boolean
+          metric: string
+          reward: number
+          scope: Database["public"]["Enums"]["community_scope"]
+          starts_at: string
+          state: string | null
+          target: number
+          title: string
+        }
+        Insert: {
+          area?: string | null
+          city?: string | null
+          created_at?: string
+          current_progress?: number
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          metric: string
+          reward?: number
+          scope: Database["public"]["Enums"]["community_scope"]
+          starts_at?: string
+          state?: string | null
+          target: number
+          title: string
+        }
+        Update: {
+          area?: string | null
+          city?: string | null
+          created_at?: string
+          current_progress?: number
+          description?: string | null
+          ends_at?: string | null
+          id?: string
+          is_active?: boolean
+          metric?: string
+          reward?: number
+          scope?: Database["public"]["Enums"]["community_scope"]
+          starts_at?: string
+          state?: string | null
+          target?: number
+          title?: string
+        }
+        Relationships: []
+      }
+      community_progress: {
+        Row: {
+          challenge_id: string
+          contribution: number
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          challenge_id: string
+          contribution?: number
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          challenge_id?: string
+          contribution?: number
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_progress_challenge_id_fkey"
+            columns: ["challenge_id"]
+            isOneToOne: false
+            referencedRelation: "community_challenges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       coupons: {
         Row: {
           code: string
@@ -220,6 +383,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      follows: {
+        Row: {
+          created_at: string
+          followed_id: string
+          follower_id: string
+        }
+        Insert: {
+          created_at?: string
+          followed_id: string
+          follower_id: string
+        }
+        Update: {
+          created_at?: string
+          followed_id?: string
+          follower_id?: string
+        }
+        Relationships: []
       }
       membership_tiers: {
         Row: {
@@ -317,6 +498,177 @@ export type Database = {
           month_earned?: number
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      post_media: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          position: number
+          post_id: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind?: string
+          position?: number
+          post_id: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          position?: number
+          post_id?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_media_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      post_reactions: {
+        Row: {
+          created_at: string
+          id: string
+          kind: Database["public"]["Enums"]["reaction_kind"]
+          post_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["reaction_kind"]
+          post_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: Database["public"]["Enums"]["reaction_kind"]
+          post_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_reactions_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      post_reports: {
+        Row: {
+          created_at: string
+          id: string
+          post_id: string
+          reason: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          post_id: string
+          reason?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          post_id?: string
+          reason?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "post_reports_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      posts: {
+        Row: {
+          area: string | null
+          body: string | null
+          city: string | null
+          co2_saved: number | null
+          comment_count: number
+          created_at: string
+          id: string
+          is_hidden: boolean
+          like_count: number
+          media_type: string | null
+          media_url: string | null
+          points_earned: number | null
+          reported_count: number
+          share_count: number
+          source_id: string | null
+          state: string | null
+          type: Database["public"]["Enums"]["post_type"]
+          updated_at: string
+          user_id: string
+          verification: Database["public"]["Enums"]["post_verification"]
+          verification_source: string | null
+        }
+        Insert: {
+          area?: string | null
+          body?: string | null
+          city?: string | null
+          co2_saved?: number | null
+          comment_count?: number
+          created_at?: string
+          id?: string
+          is_hidden?: boolean
+          like_count?: number
+          media_type?: string | null
+          media_url?: string | null
+          points_earned?: number | null
+          reported_count?: number
+          share_count?: number
+          source_id?: string | null
+          state?: string | null
+          type?: Database["public"]["Enums"]["post_type"]
+          updated_at?: string
+          user_id: string
+          verification?: Database["public"]["Enums"]["post_verification"]
+          verification_source?: string | null
+        }
+        Update: {
+          area?: string | null
+          body?: string | null
+          city?: string | null
+          co2_saved?: number | null
+          comment_count?: number
+          created_at?: string
+          id?: string
+          is_hidden?: boolean
+          like_count?: number
+          media_type?: string | null
+          media_url?: string | null
+          points_earned?: number | null
+          reported_count?: number
+          share_count?: number
+          source_id?: string | null
+          state?: string | null
+          type?: Database["public"]["Enums"]["post_type"]
+          updated_at?: string
+          user_id?: string
+          verification?: Database["public"]["Enums"]["post_verification"]
+          verification_source?: string | null
         }
         Relationships: []
       }
@@ -1083,6 +1435,32 @@ export type Database = {
         }
         Returns: undefined
       }
+      community_feed: {
+        Args: { _limit?: number; _scope?: string }
+        Returns: {
+          area: string
+          author_area: string
+          author_city: string
+          author_name: string
+          author_photo: string
+          body: string
+          city: string
+          co2_saved: number
+          comment_count: number
+          created_at: string
+          id: string
+          like_count: number
+          media_type: string
+          media_url: string
+          points_earned: number
+          share_count: number
+          state: string
+          type: Database["public"]["Enums"]["post_type"]
+          user_id: string
+          verification: Database["public"]["Enums"]["post_verification"]
+          viewer_liked: boolean
+        }[]
+      }
       evaluate_badges: { Args: { _user_id: string }; Returns: undefined }
       expire_my_coupons: { Args: never; Returns: number }
       points_for_trip: {
@@ -1107,6 +1485,10 @@ export type Database = {
         Returns: number
       }
       redeem_referral: { Args: { _code: string }; Returns: undefined }
+      report_post: {
+        Args: { _post_id: string; _reason?: string }
+        Returns: undefined
+      }
       reward_analytics: {
         Args: never
         Returns: {
@@ -1144,6 +1526,27 @@ export type Database = {
           slug: string
         }[]
       }
+      toggle_follow: { Args: { _target: string }; Returns: boolean }
+      toggle_reaction: {
+        Args: {
+          _kind?: Database["public"]["Enums"]["reaction_kind"]
+          _post_id: string
+        }
+        Returns: boolean
+      }
+      top_contributors: {
+        Args: { _limit?: number }
+        Returns: {
+          area: string
+          city: string
+          green_points: number
+          likes_received: number
+          name: string
+          photo: string
+          posts: number
+          user_id: string
+        }[]
+      }
       update_streak: {
         Args: { _date: string; _user_id: string }
         Returns: undefined
@@ -1159,6 +1562,7 @@ export type Database = {
         | "co2_saved"
         | "distance_total"
       challenge_type: "daily" | "weekly" | "monthly" | "seasonal"
+      community_scope: "area" | "city" | "state"
       point_source:
         | "trip"
         | "challenge"
@@ -1168,6 +1572,18 @@ export type Database = {
         | "manual"
         | "social"
         | "redemption"
+        | "social_post"
+        | "social_engagement"
+      post_type:
+        | "text"
+        | "image"
+        | "video"
+        | "achievement"
+        | "challenge"
+        | "trip"
+        | "milestone"
+      post_verification: "verified" | "unverified" | "community_supported"
+      reaction_kind: "like" | "celebrate" | "inspiring" | "eco_hero"
       referral_status: "pending" | "completed"
       transport_mode:
         | "walk"
@@ -1316,6 +1732,7 @@ export const Constants = {
         "distance_total",
       ],
       challenge_type: ["daily", "weekly", "monthly", "seasonal"],
+      community_scope: ["area", "city", "state"],
       point_source: [
         "trip",
         "challenge",
@@ -1325,7 +1742,20 @@ export const Constants = {
         "manual",
         "social",
         "redemption",
+        "social_post",
+        "social_engagement",
       ],
+      post_type: [
+        "text",
+        "image",
+        "video",
+        "achievement",
+        "challenge",
+        "trip",
+        "milestone",
+      ],
+      post_verification: ["verified", "unverified", "community_supported"],
+      reaction_kind: ["like", "celebrate", "inspiring", "eco_hero"],
       referral_status: ["pending", "completed"],
       transport_mode: [
         "walk",
