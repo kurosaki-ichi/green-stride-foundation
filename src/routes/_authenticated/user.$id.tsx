@@ -105,7 +105,7 @@ function PublicProfilePage() {
         <StatCard label="Challenges" value={stats.challenges ?? 0} icon={Trophy} />
         <StatCard label="Badges" value={stats.badges ?? 0} icon={Award} />
       </div>
-
+      <div className="mt-4 space-y-4">
       {transportData.length > 0 && (
         <ChartCard title="Transport breakdown" description={data.is_demo ? "Lifetime split" : "Last 30 days"}>
           <div className="flex items-center gap-4">
@@ -167,6 +167,8 @@ function PublicProfilePage() {
           </ul>
         </ChartCard>
       )}
+      </div>
+
 
       <Link to="/leaderboard" className="block text-center text-sm text-primary mt-4">← Back to leaderboard</Link>
     </AppShell>
