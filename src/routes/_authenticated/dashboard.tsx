@@ -15,6 +15,8 @@ import {
 import { useTheme } from "@/hooks/use-theme";
 import { useProfile } from "@/hooks/use-profile";
 import { useStats, useWeeklyTrend, useTransportBreakdown } from "@/hooks/use-stats";
+import { useMyRanks, useRankHistory } from "@/hooks/use-rankings";
+import { RankWidget } from "@/components/cards/RankWidget";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — EcoRewards AI" }] }),
@@ -38,6 +40,8 @@ function Dashboard() {
   const { stats, carbon, loading: sLoading } = useStats();
   const { data: weekly, loading: wLoading } = useWeeklyTrend();
   const { data: transport, loading: tLoading } = useTransportBreakdown();
+  const { row: myRank, loading: rLoading } = useMyRanks(profile?.id);
+  const { rows: history } = useRankHistory(profile?.id, "global");
 
   const firstName = profile?.name?.split(" ")[0] || "there";
 
@@ -130,21 +134,38 @@ function Dashboard() {
           />
         )}
 
-        <div className="rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 p-5 shadow-[var(--shadow-card)]">
-          <div className="flex items-start gap-3">
+        <RankWidget row={myRank} loading={rLoading} />
+
+        {history.length >= 2 && (
+          <ChartCard title="Rank history" description="Your global rank over recent weeks">
+            <div className="h-32">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={history.map((h) => ({ wk: h.week_start.slice(5), rank: h.rank }))} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
+                  <XAxis dataKey="wk" tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }} axisLine={false} tickLine={false} />
+                  <YAxis reversed tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }} axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid var(--color-border)", background: "var(--color-card)", fontSize: 12 }} />
+                  <Line type="monotone" dataKey="rank" stroke="var(--color-primary)" strokeWidth={2.5} dot={{ r: 3, fill: "var(--color-primary)" }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </ChartCard>
+        )}
+
+        <Link
+          to="/analytics"
+          className="block rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 p-4 shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)]"
+        >
+          <div className="flex items-center gap-3">
             <div className="rounded-xl bg-primary p-2 text-primary-foreground">
               <Trophy className="h-4 w-4" />
             </div>
-            <div>
-              <h3 className="text-sm font-semibold">
-                Rank {profile?.current_rank ? `#${profile.current_rank}` : "— coming soon"}
-              </h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Leaderboards launch once enough trips are logged in your area.
-              </p>
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold">Community analytics</h3>
+              <p className="text-xs text-muted-foreground">Compare your impact across areas, cities & states.</p>
             </div>
+            <span className="text-xs font-medium text-primary">View →</span>
           </div>
-        </div>
+        </Link>
       </div>
     </AppShell>
   );
