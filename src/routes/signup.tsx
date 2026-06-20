@@ -38,7 +38,7 @@ function SignupPage() {
       return;
     }
     const ref = new URLSearchParams(window.location.search).get("ref");
-    if (ref) await supabase.rpc("redeem_referral", { _code: ref }).catch(() => {});
+    if (ref) { try { await supabase.rpc("redeem_referral", { _code: ref }); } catch { /* ignore */ } }
     toast.success("Account created!");
     window.location.assign("/onboarding");
   }
