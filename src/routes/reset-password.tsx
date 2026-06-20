@@ -31,7 +31,7 @@ function ResetPassword() {
 
   if (!ready) return null;
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-5">
+    <div className="flex min-h-dvh items-center justify-center bg-background px-5">
       <form onSubmit={submit} className="w-full max-w-md space-y-4">
         <h1 className="text-2xl font-semibold tracking-tight">Set a new password</h1>
         <div className="space-y-1.5">

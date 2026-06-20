@@ -122,7 +122,7 @@ function Onboarding() {
     (step === 4 && goal);
 
   return (
-    <div className="min-h-screen bg-background px-5 py-8">
+    <div className="min-h-dvh bg-background px-5 py-8">
       <div className="mx-auto max-w-md">
         <div className="mb-6 flex items-center gap-2">
           {[1, 2, 3, 4].map((n) => (

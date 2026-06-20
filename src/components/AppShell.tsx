@@ -13,7 +13,7 @@ export function AppShell({
   children: ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-background pb-24">
+    <div className="min-h-dvh bg-background pb-24">
       <div className="mx-auto max-w-md">
         {(title || right) && (
           <header className="flex items-start justify-between gap-4 px-5 pt-6 pb-3">

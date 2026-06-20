@@ -123,8 +123,8 @@ function AICoachPage() {
         <form onSubmit={(e) => { e.preventDefault(); submit(input); }} className="flex gap-2">
           <Input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)}
             placeholder="Ask EcoCoach…" disabled={busy || !token} maxLength={500} className="rounded-2xl" />
-          <Button type="submit" size="icon" disabled={busy || !input.trim() || !token} className="rounded-2xl shrink-0">
-            {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+          <Button type="submit" size="icon" disabled={busy || !input.trim() || !token} className="rounded-2xl shrink-0" aria-label="Send message">
+            {busy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <Send className="h-4 w-4" aria-hidden="true" />}
           </Button>
         </form>
       </div>

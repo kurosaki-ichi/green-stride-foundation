@@ -37,7 +37,7 @@ function ReferralsPage() {
         <p className="text-xs uppercase opacity-80">Your invite link</p>
         <div className="mt-2 flex gap-2">
           <Input readOnly value={url} className="h-10 rounded-xl border-0 bg-white/15 text-xs text-primary-foreground placeholder:text-primary-foreground/60" />
-          <Button onClick={copy} size="icon" variant="secondary" className="h-10 w-10 rounded-xl"><Copy className="h-4 w-4" /></Button>
+          <Button onClick={copy} size="icon" variant="secondary" className="h-10 w-10 rounded-xl" aria-label="Copy referral code"><Copy className="h-4 w-4" aria-hidden="true" /></Button>
         </div>
         <Button onClick={share} variant="secondary" className="mt-3 h-10 w-full rounded-xl">
           <Share2 className="mr-2 h-4 w-4" /> Share link
