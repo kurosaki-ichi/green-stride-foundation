@@ -29,6 +29,10 @@ import { Progress } from "@/components/ui/progress";
 import { useFeed, useCommunityChallenges } from "@/hooks/use-community";
 import { CommunityChallengeCard } from "@/components/community/CommunityChallengeCard";
 import { Users } from "lucide-react";
+import { ForecastCard } from "@/components/ai/ForecastCard";
+import { SustainabilityScoreCard } from "@/components/ai/SustainabilityScoreCard";
+import { RecommendationsList } from "@/components/ai/RecommendationsList";
+import { useSustainabilityScore } from "@/hooks/use-ai";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — EcoRewards AI" }] }),
