@@ -68,6 +68,7 @@ function Dashboard() {
   const { posts: feed } = useFeed("all");
   const communityGoals = useCommunityChallenges();
   const tier = useMyTier(wallet?.lifetime_earned ?? 0);
+  const { score: susScore } = useSustainabilityScore();
   const featuredRewards = rewards.filter((r) => r.featured || r.recommended).slice(0, 4);
   const lastRedemption = redemptions[0];
   const recentPost = feed[0];
