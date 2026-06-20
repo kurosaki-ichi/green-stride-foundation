@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyState } from "@/components/EmptyState";
 import {
-  Leaf, Sparkles, TrendingDown, Trophy, ShieldCheck, Activity, Moon, Sun, Plus, Route as RouteIcon,
+  Leaf, Sparkles, TrendingDown, Trophy, ShieldCheck, Activity, Moon, Sun, Plus,
+  Route as RouteIcon, Flame, Target as TargetIcon, ChevronRight,
 } from "lucide-react";
 import {
   LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip,
@@ -16,7 +17,9 @@ import { useTheme } from "@/hooks/use-theme";
 import { useProfile } from "@/hooks/use-profile";
 import { useStats, useWeeklyTrend, useTransportBreakdown } from "@/hooks/use-stats";
 import { useMyRanks, useRankHistory } from "@/hooks/use-rankings";
+import { useWallet, useStreak, useChallenges } from "@/hooks/use-gamification";
 import { RankWidget } from "@/components/cards/RankWidget";
+import { Progress } from "@/components/ui/progress";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — EcoRewards AI" }] }),
