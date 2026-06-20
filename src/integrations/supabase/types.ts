@@ -231,53 +231,92 @@ export type Database = {
         Row: {
           area: string | null
           city: string | null
+          commute_km: number | null
+          country: string | null
           created_at: string
           current_rank: number | null
           email: string | null
           green_points: number
+          home_address: string | null
+          home_lat: number | null
+          home_lng: number | null
           id: string
+          latitude: number | null
+          location_verified: boolean
+          longitude: number | null
           name: string | null
           onboarding_complete: boolean
           primary_goal: string | null
           profile_photo: string | null
           state: string | null
           transport_habits: string[] | null
+          trust_level: string
           trust_score: number
           updated_at: string
+          verification_source: string | null
+          work_address: string | null
+          work_lat: number | null
+          work_lng: number | null
         }
         Insert: {
           area?: string | null
           city?: string | null
+          commute_km?: number | null
+          country?: string | null
           created_at?: string
           current_rank?: number | null
           email?: string | null
           green_points?: number
+          home_address?: string | null
+          home_lat?: number | null
+          home_lng?: number | null
           id: string
+          latitude?: number | null
+          location_verified?: boolean
+          longitude?: number | null
           name?: string | null
           onboarding_complete?: boolean
           primary_goal?: string | null
           profile_photo?: string | null
           state?: string | null
           transport_habits?: string[] | null
+          trust_level?: string
           trust_score?: number
           updated_at?: string
+          verification_source?: string | null
+          work_address?: string | null
+          work_lat?: number | null
+          work_lng?: number | null
         }
         Update: {
           area?: string | null
           city?: string | null
+          commute_km?: number | null
+          country?: string | null
           created_at?: string
           current_rank?: number | null
           email?: string | null
           green_points?: number
+          home_address?: string | null
+          home_lat?: number | null
+          home_lng?: number | null
           id?: string
+          latitude?: number | null
+          location_verified?: boolean
+          longitude?: number | null
           name?: string | null
           onboarding_complete?: boolean
           primary_goal?: string | null
           profile_photo?: string | null
           state?: string | null
           transport_habits?: string[] | null
+          trust_level?: string
           trust_score?: number
           updated_at?: string
+          verification_source?: string | null
+          work_address?: string | null
+          work_lat?: number | null
+          work_lng?: number | null
         }
         Relationships: []
       }
@@ -522,6 +561,72 @@ export type Database = {
         }
         Relationships: []
       }
+      verification_history: {
+        Row: {
+          created_at: string
+          delta: number
+          id: string
+          new_score: number
+          reason: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          delta: number
+          id?: string
+          new_score: number
+          reason: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          delta?: number
+          id?: string
+          new_score?: number
+          reason?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      verification_records: {
+        Row: {
+          address: string | null
+          created_at: string
+          id: string
+          kind: string
+          latitude: number | null
+          longitude: number | null
+          metadata: Json | null
+          source: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          id?: string
+          kind: string
+          latitude?: number | null
+          longitude?: number | null
+          metadata?: Json | null
+          source: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          latitude?: number | null
+          longitude?: number | null
+          metadata?: Json | null
+          source?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       area_stats: {
@@ -697,6 +802,19 @@ export type Database = {
         Returns: number
       }
       recompute_challenges: { Args: { _user_id: string }; Returns: undefined }
+      recompute_trust_score: { Args: { _user_id: string }; Returns: number }
+      record_verification: {
+        Args: {
+          _address?: string
+          _kind: string
+          _lat?: number
+          _lng?: number
+          _metadata?: Json
+          _source: string
+          _status?: string
+        }
+        Returns: number
+      }
       redeem_referral: { Args: { _code: string }; Returns: undefined }
       snapshot_rankings: { Args: never; Returns: undefined }
       sync_user_rank: { Args: { _user_id: string }; Returns: undefined }
