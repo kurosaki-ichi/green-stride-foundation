@@ -104,6 +104,39 @@ export type Database = {
         }
         Relationships: []
       }
+      ranking_history: {
+        Row: {
+          created_at: string
+          green_points: number
+          id: string
+          rank: number
+          scope: string
+          total_saved: number
+          user_id: string
+          week_start: string
+        }
+        Insert: {
+          created_at?: string
+          green_points?: number
+          id?: string
+          rank: number
+          scope: string
+          total_saved?: number
+          user_id: string
+          week_start: string
+        }
+        Update: {
+          created_at?: string
+          green_points?: number
+          id?: string
+          rank?: number
+          scope?: string
+          total_saved?: number
+          user_id?: string
+          week_start?: string
+        }
+        Relationships: []
+      }
       trips: {
         Row: {
           co2_generated: number
@@ -181,10 +214,86 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      area_stats: {
+        Row: {
+          active_users: number | null
+          area: string | null
+          avg_co2: number | null
+          avg_saved: number | null
+          city: string | null
+          rank: number | null
+          state: string | null
+          total_co2: number | null
+          total_green_points: number | null
+          total_saved: number | null
+        }
+        Relationships: []
+      }
+      city_stats: {
+        Row: {
+          active_users: number | null
+          avg_co2: number | null
+          avg_saved: number | null
+          city: string | null
+          rank: number | null
+          state: string | null
+          total_co2: number | null
+          total_green_points: number | null
+          total_saved: number | null
+        }
+        Relationships: []
+      }
+      community_totals: {
+        Row: {
+          total_co2: number | null
+          total_distance: number | null
+          total_green_points: number | null
+          total_saved: number | null
+          total_trips: number | null
+          total_users: number | null
+        }
+        Relationships: []
+      }
+      leaderboard_individual: {
+        Row: {
+          area: string | null
+          area_rank: number | null
+          challenge_count: number | null
+          city: string | null
+          city_rank: number | null
+          global_rank: number | null
+          green_points: number | null
+          name: string | null
+          profile_photo: string | null
+          state: string | null
+          state_rank: number | null
+          total_co2: number | null
+          total_distance: number | null
+          total_saved: number | null
+          total_trips: number | null
+          total_users: number | null
+          trust_score: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
+      state_stats: {
+        Row: {
+          active_users: number | null
+          avg_co2: number | null
+          avg_saved: number | null
+          rank: number | null
+          state: string | null
+          total_co2: number | null
+          total_green_points: number | null
+          total_saved: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      [_ in never]: never
+      snapshot_rankings: { Args: never; Returns: undefined }
+      sync_user_rank: { Args: { _user_id: string }; Returns: undefined }
     }
     Enums: {
       transport_mode:
