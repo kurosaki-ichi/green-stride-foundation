@@ -55,6 +55,11 @@ function Dashboard() {
   const { streak } = useStreak();
   const { items: challenges } = useChallenges();
   const { rows: areaRows } = useAreaStats();
+  const { rewards } = useRewardsCatalog();
+  const { items: redemptions } = useRedemptions();
+  const tier = useMyTier(wallet?.lifetime_earned ?? 0);
+  const featuredRewards = rewards.filter((r) => r.featured || r.recommended).slice(0, 4);
+  const lastRedemption = redemptions[0];
   const nextChallenge = challenges.find((c) => !c.completed);
   const myArea = areaRows.find(
     (a) => a.area === profile?.area && a.city === profile?.city && a.state === profile?.state,
