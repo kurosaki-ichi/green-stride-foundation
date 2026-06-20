@@ -19,6 +19,9 @@ import { useStats, useWeeklyTrend, useTransportBreakdown } from "@/hooks/use-sta
 import { useMyRanks, useRankHistory } from "@/hooks/use-rankings";
 import { useWallet, useStreak, useChallenges } from "@/hooks/use-gamification";
 import { RankWidget } from "@/components/cards/RankWidget";
+import { TrustScoreCard } from "@/components/cards/TrustScoreCard";
+import { LocationInsightsCard } from "@/components/cards/LocationInsightsCard";
+import { useAreaStats } from "@/hooks/use-rankings";
 import { Progress } from "@/components/ui/progress";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
@@ -48,7 +51,11 @@ function Dashboard() {
   const { wallet } = useWallet();
   const { streak } = useStreak();
   const { items: challenges } = useChallenges();
+  const { rows: areaRows } = useAreaStats();
   const nextChallenge = challenges.find((c) => !c.completed);
+  const myArea = areaRows.find(
+    (a) => a.area === profile?.area && a.city === profile?.city && a.state === profile?.state,
+  );
 
   const firstName = profile?.name?.split(" ")[0] || "there";
 
@@ -96,6 +103,17 @@ function Dashboard() {
           <p className="mt-2 text-2xl font-semibold tabular-nums">{streak?.current_streak ?? 0} <span className="text-xs font-medium text-muted-foreground">days</span></p>
           <p className="text-[11px] text-muted-foreground">Best: {streak?.longest_streak ?? 0}</p>
         </div>
+      </div>
+
+      <div className="mt-3 grid grid-cols-1 gap-3">
+        <TrustScoreCard score={profile?.trust_score ?? 50} verified={!!profile?.location_verified} />
+        <LocationInsightsCard
+          area={profile?.area}
+          city={profile?.city}
+          userAvg={Number(stats?.total_co2 ?? 0)}
+          areaAvg={Number(myArea?.avg_co2 ?? 0)}
+          areaRank={myArea?.rank ?? null}
+        />
       </div>
 
       {nextChallenge && (
