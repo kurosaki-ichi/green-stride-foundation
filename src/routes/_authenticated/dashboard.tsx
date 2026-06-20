@@ -85,8 +85,8 @@ function Dashboard() {
       title={`Hi ${firstName} 👋`}
       subtitle="Here's your impact today."
       right={
-        <Button variant="ghost" size="icon" onClick={toggle} className="rounded-xl">
-          {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        <Button variant="ghost" size="icon" onClick={toggle} className="rounded-xl" aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
+          {theme === "dark" ? <Sun className="h-4 w-4" aria-hidden="true" /> : <Moon className="h-4 w-4" aria-hidden="true" />}
         </Button>
       }
     >

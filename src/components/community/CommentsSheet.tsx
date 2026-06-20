@@ -38,7 +38,7 @@ export function CommentsSheet({
         <div className="mt-4 flex gap-2">
           <Input value={text} onChange={(e) => setText(e.target.value)} placeholder="Add a comment…" maxLength={500}
             onKeyDown={(e) => { if (e.key === "Enter") submit(); }} />
-          <Button onClick={submit} size="icon"><Send className="h-4 w-4" /></Button>
+          <Button onClick={submit} size="icon" aria-label="Post comment"><Send className="h-4 w-4" aria-hidden="true" /></Button>
         </div>
       </SheetContent>
     </Sheet>
