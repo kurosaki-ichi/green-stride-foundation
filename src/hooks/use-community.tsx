@@ -72,7 +72,7 @@ export async function toggleFollow(targetId: string) {
 }
 
 export async function reportPost(postId: string, reason?: string) {
-  const { error } = await supabase.rpc("report_post", { _post_id: postId, _reason: reason ?? null });
+  const { error } = await supabase.rpc("report_post", { _post_id: postId, _reason: reason ?? undefined });
   if (error) throw error;
 }
 
