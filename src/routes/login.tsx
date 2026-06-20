@@ -27,16 +27,24 @@ function LoginPage() {
   async function signIn(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) return toast.error(error.message);
+    if (!data.session) return toast.error("Could not start session. Try again.");
     toast.success("Welcome back!");
-    navigate({ to: (search.redirect as any) ?? "/dashboard" });
+    const dest = search.redirect && search.redirect.startsWith("/") ? search.redirect : "/dashboard";
+    // Hard navigate so the protected route's beforeLoad re-reads the new session
+    window.location.assign(dest);
   }
 
   async function google() {
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/dashboard" });
-    if (result.error) toast.error("Google sign-in failed");
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin + "/dashboard",
+    });
+    if (result.error) return toast.error("Google sign-in failed");
+    if (result.redirected) return; // browser handles it
+    // Tokens returned inline — session already set
+    window.location.assign("/dashboard");
   }
 
   async function forgot() {
