@@ -26,6 +26,9 @@ import { TierCard } from "@/components/cards/TierCard";
 import { RewardCard } from "@/components/cards/RewardCard";
 import { useAreaStats } from "@/hooks/use-rankings";
 import { Progress } from "@/components/ui/progress";
+import { useFeed, useCommunityChallenges } from "@/hooks/use-community";
+import { CommunityChallengeCard } from "@/components/community/CommunityChallengeCard";
+import { Users } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — EcoRewards AI" }] }),
