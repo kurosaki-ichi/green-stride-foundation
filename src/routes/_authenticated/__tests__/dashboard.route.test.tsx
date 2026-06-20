@@ -33,6 +33,8 @@ vi.mock("@/hooks/use-rankings", () => ({
   useMyRanks: () => ({ row: null, loading: false }),
   useRankHistory: () => ({ rows: [] }),
   useAreaStats: () => ({ rows: [] }),
+  percentile: () => null,
+  percentileLabel: () => "",
 }));
 vi.mock("@/hooks/use-gamification", () => ({
   useWallet: () => ({ wallet: { balance: 0, lifetime_earned: 0, month_earned: 0 } }),
