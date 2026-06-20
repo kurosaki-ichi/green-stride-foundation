@@ -26,20 +26,28 @@ function SignupPage() {
     if (password !== confirm) return toast.error("Passwords don't match");
     if (password.length < 8) return toast.error("Password must be at least 8 characters");
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { name }, emailRedirectTo: window.location.origin + "/onboarding" },
     });
     setLoading(false);
     if (error) return toast.error(error.message);
+    if (!data.session) {
+      toast.success("Check your email to confirm your account.");
+      return;
+    }
     toast.success("Account created!");
-    navigate({ to: "/onboarding" });
+    window.location.assign("/onboarding");
   }
 
   async function google() {
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + "/onboarding" });
-    if (result.error) toast.error("Google sign-in failed");
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin + "/onboarding",
+    });
+    if (result.error) return toast.error("Google sign-in failed");
+    if (result.redirected) return;
+    window.location.assign("/onboarding");
   }
 
   return (
