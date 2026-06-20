@@ -44,6 +44,78 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_insights: {
+        Row: {
+          body: string
+          id: string
+          metric: number | null
+          slot: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          id?: string
+          metric?: number | null
+          slot: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          id?: string
+          metric?: number | null
+          slot?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ai_recommendations: {
+        Row: {
+          created_at: string
+          cta_label: string | null
+          cta_link: string | null
+          description: string | null
+          dismissed: boolean
+          id: string
+          impact: string | null
+          is_global: boolean
+          kind: string
+          title: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          cta_label?: string | null
+          cta_link?: string | null
+          description?: string | null
+          dismissed?: boolean
+          id?: string
+          impact?: string | null
+          is_global?: boolean
+          kind: string
+          title: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          cta_label?: string | null
+          cta_link?: string | null
+          description?: string | null
+          dismissed?: boolean
+          id?: string
+          impact?: string | null
+          is_global?: boolean
+          kind?: string
+          title?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       badges: {
         Row: {
           code: string
@@ -80,6 +152,39 @@ export type Database = {
           name?: string
           reward?: number
           tier?: Database["public"]["Enums"]["badge_tier"]
+        }
+        Relationships: []
+      }
+      carbon_forecasts: {
+        Row: {
+          current_co2: number
+          generated_at: string
+          horizon_days: number
+          id: string
+          potential_reduction: number
+          predicted_co2: number
+          recommended_co2: number
+          user_id: string
+        }
+        Insert: {
+          current_co2: number
+          generated_at?: string
+          horizon_days: number
+          id?: string
+          potential_reduction: number
+          predicted_co2: number
+          recommended_co2: number
+          user_id: string
+        }
+        Update: {
+          current_co2?: number
+          generated_at?: string
+          horizon_days?: number
+          id?: string
+          potential_reduction?: number
+          predicted_co2?: number
+          recommended_co2?: number
+          user_id?: string
         }
         Relationships: []
       }
@@ -164,6 +269,68 @@ export type Database = {
           target?: number
           title?: string
           type?: Database["public"]["Enums"]["challenge_type"]
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          parts: Json | null
+          role: string
+          thread_id: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          parts?: Json | null
+          role: string
+          thread_id: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          parts?: Json | null
+          role?: string
+          thread_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "chat_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_threads: {
+        Row: {
+          created_at: string
+          id: string
+          last_message_at: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_message_at?: string
+          title?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_message_at?: string
+          title?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -401,6 +568,41 @@ export type Database = {
           follower_id?: string
         }
         Relationships: []
+      }
+      goal_progress: {
+        Row: {
+          created_at: string
+          goal_id: string
+          id: string
+          note: string | null
+          user_id: string
+          value: number
+        }
+        Insert: {
+          created_at?: string
+          goal_id: string
+          id?: string
+          note?: string | null
+          user_id: string
+          value: number
+        }
+        Update: {
+          created_at?: string
+          goal_id?: string
+          id?: string
+          note?: string | null
+          user_id?: string
+          value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "goal_progress_goal_id_fkey"
+            columns: ["goal_id"]
+            isOneToOne: false
+            referencedRelation: "user_goals"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       membership_tiers: {
         Row: {
@@ -1144,6 +1346,54 @@ export type Database = {
           },
         ]
       }
+      user_goals: {
+        Row: {
+          ai_plan: string | null
+          created_at: string
+          current_value: number
+          deadline: string | null
+          description: string | null
+          id: string
+          kind: Database["public"]["Enums"]["goal_kind"]
+          status: string
+          target: number
+          title: string
+          unit: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          ai_plan?: string | null
+          created_at?: string
+          current_value?: number
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          kind?: Database["public"]["Enums"]["goal_kind"]
+          status?: string
+          target: number
+          title: string
+          unit?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          ai_plan?: string | null
+          created_at?: string
+          current_value?: number
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          kind?: Database["public"]["Enums"]["goal_kind"]
+          status?: string
+          target?: number
+          title?: string
+          unit?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_rewards: {
         Row: {
           favourited_at: string
@@ -1265,6 +1515,39 @@ export type Database = {
           metadata?: Json | null
           source?: string
           status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      weekly_reports: {
+        Row: {
+          created_at: string
+          forecast: Json | null
+          highlights: Json | null
+          id: string
+          period: string
+          period_start: string
+          summary: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          forecast?: Json | null
+          highlights?: Json | null
+          id?: string
+          period: string
+          period_start: string
+          summary: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          forecast?: Json | null
+          highlights?: Json | null
+          id?: string
+          period?: string
+          period_start?: string
+          summary?: string
           user_id?: string
         }
         Relationships: []
@@ -1425,6 +1708,7 @@ export type Database = {
           total_saved: number
         }[]
       }
+      ai_context: { Args: { _user_id: string }; Returns: Json }
       award_points: {
         Args: {
           _amount: number
@@ -1434,6 +1718,16 @@ export type Database = {
           _user_id: string
         }
         Returns: undefined
+      }
+      carbon_forecast: {
+        Args: { _horizon_days?: number; _user_id: string }
+        Returns: {
+          current_co2: number
+          horizon_days: number
+          potential_reduction: number
+          predicted_co2: number
+          recommended_co2: number
+        }[]
       }
       community_feed: {
         Args: { _limit?: number; _scope?: string }
@@ -1514,6 +1808,17 @@ export type Database = {
           redemption_id: string
         }[]
       }
+      sustainability_score: {
+        Args: { _user_id: string }
+        Returns: {
+          challenges: number
+          community: number
+          consistency: number
+          score: number
+          transport: number
+          trust: number
+        }[]
+      }
       sync_user_rank: { Args: { _user_id: string }; Returns: undefined }
       tier_for_points: {
         Args: { _lifetime: number }
@@ -1563,6 +1868,12 @@ export type Database = {
         | "distance_total"
       challenge_type: "daily" | "weekly" | "monthly" | "seasonal"
       community_scope: "area" | "city" | "state"
+      goal_kind:
+        | "reduce_co2"
+        | "reach_rank"
+        | "earn_points"
+        | "complete_challenges"
+        | "custom"
       point_source:
         | "trip"
         | "challenge"
@@ -1733,6 +2044,13 @@ export const Constants = {
       ],
       challenge_type: ["daily", "weekly", "monthly", "seasonal"],
       community_scope: ["area", "city", "state"],
+      goal_kind: [
+        "reduce_co2",
+        "reach_rank",
+        "earn_points",
+        "complete_challenges",
+        "custom",
+      ],
       point_source: [
         "trip",
         "challenge",

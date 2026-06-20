@@ -14,6 +14,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedWalletRouteImport } from './routes/_authenticated/wallet'
 import { Route as AuthenticatedVerificationRouteImport } from './routes/_authenticated/verification'
 import { Route as AuthenticatedTripsRouteImport } from './routes/_authenticated/trips'
@@ -24,6 +25,7 @@ import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedMembershipRouteImport } from './routes/_authenticated/membership'
 import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
+import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
 import { Route as AuthenticatedEditProfileRouteImport } from './routes/_authenticated/edit-profile'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedCouponsRouteImport } from './routes/_authenticated/coupons'
@@ -56,6 +58,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedWalletRoute = AuthenticatedWalletRouteImport.update({
@@ -110,6 +117,11 @@ const AuthenticatedLeaderboardRoute =
     path: '/leaderboard',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedInsightsRoute = AuthenticatedInsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedEditProfileRoute =
   AuthenticatedEditProfileRouteImport.update({
     id: '/edit-profile',
@@ -170,6 +182,7 @@ export interface FileRoutesByFullPath {
   '/coupons': typeof AuthenticatedCouponsRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/edit-profile': typeof AuthenticatedEditProfileRoute
+  '/insights': typeof AuthenticatedInsightsRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/membership': typeof AuthenticatedMembershipRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -180,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/trips': typeof AuthenticatedTripsRoute
   '/verification': typeof AuthenticatedVerificationRoute
   '/wallet': typeof AuthenticatedWalletRoute
+  '/api/chat': typeof ApiChatRoute
   '/coupons/$id': typeof AuthenticatedCouponsIdRoute
 }
 export interface FileRoutesByTo {
@@ -195,6 +209,7 @@ export interface FileRoutesByTo {
   '/coupons': typeof AuthenticatedCouponsRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/edit-profile': typeof AuthenticatedEditProfileRoute
+  '/insights': typeof AuthenticatedInsightsRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/membership': typeof AuthenticatedMembershipRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
@@ -205,6 +220,7 @@ export interface FileRoutesByTo {
   '/trips': typeof AuthenticatedTripsRoute
   '/verification': typeof AuthenticatedVerificationRoute
   '/wallet': typeof AuthenticatedWalletRoute
+  '/api/chat': typeof ApiChatRoute
   '/coupons/$id': typeof AuthenticatedCouponsIdRoute
 }
 export interface FileRoutesById {
@@ -222,6 +238,7 @@ export interface FileRoutesById {
   '/_authenticated/coupons': typeof AuthenticatedCouponsRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/edit-profile': typeof AuthenticatedEditProfileRoute
+  '/_authenticated/insights': typeof AuthenticatedInsightsRoute
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
   '/_authenticated/membership': typeof AuthenticatedMembershipRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
@@ -232,6 +249,7 @@ export interface FileRoutesById {
   '/_authenticated/trips': typeof AuthenticatedTripsRoute
   '/_authenticated/verification': typeof AuthenticatedVerificationRoute
   '/_authenticated/wallet': typeof AuthenticatedWalletRoute
+  '/api/chat': typeof ApiChatRoute
   '/_authenticated/coupons/$id': typeof AuthenticatedCouponsIdRoute
 }
 export interface FileRouteTypes {
@@ -249,6 +267,7 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/dashboard'
     | '/edit-profile'
+    | '/insights'
     | '/leaderboard'
     | '/membership'
     | '/onboarding'
@@ -259,6 +278,7 @@ export interface FileRouteTypes {
     | '/trips'
     | '/verification'
     | '/wallet'
+    | '/api/chat'
     | '/coupons/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -274,6 +294,7 @@ export interface FileRouteTypes {
     | '/coupons'
     | '/dashboard'
     | '/edit-profile'
+    | '/insights'
     | '/leaderboard'
     | '/membership'
     | '/onboarding'
@@ -284,6 +305,7 @@ export interface FileRouteTypes {
     | '/trips'
     | '/verification'
     | '/wallet'
+    | '/api/chat'
     | '/coupons/$id'
   id:
     | '__root__'
@@ -300,6 +322,7 @@ export interface FileRouteTypes {
     | '/_authenticated/coupons'
     | '/_authenticated/dashboard'
     | '/_authenticated/edit-profile'
+    | '/_authenticated/insights'
     | '/_authenticated/leaderboard'
     | '/_authenticated/membership'
     | '/_authenticated/onboarding'
@@ -310,6 +333,7 @@ export interface FileRouteTypes {
     | '/_authenticated/trips'
     | '/_authenticated/verification'
     | '/_authenticated/wallet'
+    | '/api/chat'
     | '/_authenticated/coupons/$id'
   fileRoutesById: FileRoutesById
 }
@@ -319,6 +343,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
+  ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -356,6 +381,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/wallet': {
@@ -426,6 +458,13 @@ declare module '@tanstack/react-router' {
       path: '/leaderboard'
       fullPath: '/leaderboard'
       preLoaderRoute: typeof AuthenticatedLeaderboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/insights': {
+      id: '/_authenticated/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof AuthenticatedInsightsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/edit-profile': {
@@ -514,6 +553,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCouponsRoute: typeof AuthenticatedCouponsRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEditProfileRoute: typeof AuthenticatedEditProfileRoute
+  AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
   AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
   AuthenticatedMembershipRoute: typeof AuthenticatedMembershipRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
@@ -535,6 +575,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCouponsRoute: AuthenticatedCouponsRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEditProfileRoute: AuthenticatedEditProfileRoute,
+  AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
   AuthenticatedLeaderboardRoute: AuthenticatedLeaderboardRoute,
   AuthenticatedMembershipRoute: AuthenticatedMembershipRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
@@ -556,6 +597,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
+  ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

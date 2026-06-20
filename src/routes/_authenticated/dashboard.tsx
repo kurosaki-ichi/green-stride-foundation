@@ -29,6 +29,10 @@ import { Progress } from "@/components/ui/progress";
 import { useFeed, useCommunityChallenges } from "@/hooks/use-community";
 import { CommunityChallengeCard } from "@/components/community/CommunityChallengeCard";
 import { Users } from "lucide-react";
+import { ForecastCard } from "@/components/ai/ForecastCard";
+import { SustainabilityScoreCard } from "@/components/ai/SustainabilityScoreCard";
+import { RecommendationsList } from "@/components/ai/RecommendationsList";
+import { useSustainabilityScore } from "@/hooks/use-ai";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — EcoRewards AI" }] }),
@@ -64,6 +68,7 @@ function Dashboard() {
   const { posts: feed } = useFeed("all");
   const communityGoals = useCommunityChallenges();
   const tier = useMyTier(wallet?.lifetime_earned ?? 0);
+  const { score: susScore } = useSustainabilityScore();
   const featuredRewards = rewards.filter((r) => r.featured || r.recommended).slice(0, 4);
   const lastRedemption = redemptions[0];
   const recentPost = feed[0];
@@ -217,6 +222,23 @@ function Dashboard() {
           </div>
         </section>
       )}
+
+      <section className="mt-4 space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">AI insights</h3>
+          <Link to="/insights" className="text-xs font-medium text-primary">Open insights →</Link>
+        </div>
+        <SustainabilityScoreCard s={susScore} />
+        <ForecastCard />
+        <RecommendationsList limit={2} />
+        <Link to="/ai-coach" className="block rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 to-success/5 p-4 hover:border-primary transition-colors">
+          <div className="flex items-center gap-2">
+            <span className="rounded-lg bg-primary/15 p-1.5 text-primary"><Sparkles className="h-4 w-4" /></span>
+            <p className="text-sm font-semibold">Ask EcoCoach anything</p>
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground">Personalized tips based on your trips, rank, and challenges.</p>
+        </Link>
+      </section>
 
       <div className="mt-5 space-y-4">
         <ChartCard title="Weekly trend" description="CO₂ emitted, last 7 days">
