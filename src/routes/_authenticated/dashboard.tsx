@@ -79,6 +79,43 @@ function Dashboard() {
         </div>
       )}
 
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        <Link to="/wallet" className="rounded-2xl bg-card p-4 shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)]">
+          <div className="flex items-center gap-2">
+            <span className="rounded-lg bg-primary/10 p-1.5 text-primary"><Sparkles className="h-4 w-4" /></span>
+            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Wallet</p>
+          </div>
+          <p className="mt-2 text-2xl font-semibold tabular-nums">{(wallet?.balance ?? 0).toLocaleString()}</p>
+          <p className="text-[11px] text-muted-foreground">+{wallet?.month_earned ?? 0} this month</p>
+        </Link>
+        <div className="rounded-2xl bg-card p-4 shadow-[var(--shadow-card)]">
+          <div className="flex items-center gap-2">
+            <span className="rounded-lg bg-[color:var(--warning)]/15 p-1.5 text-[color:var(--warning)]"><Flame className="h-4 w-4" /></span>
+            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Streak</p>
+          </div>
+          <p className="mt-2 text-2xl font-semibold tabular-nums">{streak?.current_streak ?? 0} <span className="text-xs font-medium text-muted-foreground">days</span></p>
+          <p className="text-[11px] text-muted-foreground">Best: {streak?.longest_streak ?? 0}</p>
+        </div>
+      </div>
+
+      {nextChallenge && (
+        <Link to="/challenges" className="mt-3 block rounded-2xl bg-card p-4 shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)]">
+          <div className="flex items-center gap-3">
+            <span className="rounded-xl bg-accent p-2 text-accent-foreground"><TargetIcon className="h-4 w-4" /></span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Active challenge</p>
+              <p className="truncate text-sm font-semibold">{nextChallenge.title}</p>
+            </div>
+            <span className="rounded-md bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary">+{nextChallenge.reward}</span>
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+          </div>
+          <Progress
+            value={Math.min(100, Math.round((Number(nextChallenge.progress) / Number(nextChallenge.target)) * 100))}
+            className="mt-3 h-2"
+          />
+        </Link>
+      )}
+
       <div className="mt-5 space-y-4">
         <ChartCard title="Weekly trend" description="CO₂ emitted, last 7 days">
           {wLoading ? (
