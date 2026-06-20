@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 import { StatCard } from "@/components/cards/StatCard";
 import { ChartCard } from "@/components/cards/ChartCard";
