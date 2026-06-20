@@ -1,5 +1,11 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeAll } from "vitest";
 import { render, screen } from "@testing-library/react";
+
+beforeAll(() => {
+  if (!(Element.prototype as any).scrollTo) {
+    (Element.prototype as any).scrollTo = function () {};
+  }
+});
 
 vi.mock("@tanstack/react-router", async () => {
   const React = await import("react");
