@@ -8,7 +8,7 @@ import { useProfile } from "@/hooks/use-profile";
 import { useStats } from "@/hooks/use-stats";
 import { useTrips } from "@/hooks/use-trips";
 import { TRANSPORT_LABELS, type TransportMode } from "@/lib/carbon";
-import { LogOut, ChevronRight, MapPin, Pencil, Award, Activity, Wallet, Users, Flame } from "lucide-react";
+import { LogOut, ChevronRight, MapPin, Pencil, Award, Activity, Wallet, Users, Flame, ShieldCheck } from "lucide-react";
 import { useStreak } from "@/hooks/use-gamification";
 
 export const Route = createFileRoute("/_authenticated/profile")({
@@ -79,13 +79,14 @@ function ProfilePage() {
       </div>
 
       <div className="mt-5 space-y-2">
+        <Row to="/verification" icon={ShieldCheck} label="Verification center" value={profile?.location_verified ? "Verified ✓" : "Boost your trust score"} />
         <Row to="/wallet" icon={Wallet} label="Green wallet" value="Points & transactions" />
         <Row to="/badges" icon={Award} label="Badges" value="Your achievements" />
         <Row to="/referrals" icon={Users} label="Refer friends" value="Earn 100 pts each" />
         <Row icon={Flame} label="Current streak" value={`${streak?.current_streak ?? 0} days · best ${streak?.longest_streak ?? 0}`} />
         <Row to="/edit-profile" icon={Pencil} label="Edit profile" value="Name, location, photo" />
         <Row to="/trips" icon={Activity} label="Trip history" value={`${stats?.total_trips ?? 0} logged`} />
-        <Row icon={MapPin} label="Location" value={profile?.city ?? "Not set"} />
+        <Row icon={MapPin} label="Location" value={profile?.area ? `${profile.area}, ${profile.city ?? ""}` : profile?.city ?? "Not set"} />
       </div>
 
       <Button onClick={signOut} variant="outline" className="mt-6 h-11 w-full rounded-xl">
