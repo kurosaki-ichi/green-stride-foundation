@@ -292,6 +292,82 @@ export type Database = {
       }
     }
     Functions: {
+      _area_stats: {
+        Args: never
+        Returns: {
+          active_users: number
+          area: string
+          avg_co2: number
+          avg_saved: number
+          city: string
+          rank: number
+          state: string
+          total_co2: number
+          total_green_points: number
+          total_saved: number
+        }[]
+      }
+      _city_stats: {
+        Args: never
+        Returns: {
+          active_users: number
+          avg_co2: number
+          avg_saved: number
+          city: string
+          rank: number
+          state: string
+          total_co2: number
+          total_green_points: number
+          total_saved: number
+        }[]
+      }
+      _community_totals: {
+        Args: never
+        Returns: {
+          total_co2: number
+          total_distance: number
+          total_green_points: number
+          total_saved: number
+          total_trips: number
+          total_users: number
+        }[]
+      }
+      _leaderboard_individual: {
+        Args: never
+        Returns: {
+          area: string
+          area_rank: number
+          challenge_count: number
+          city: string
+          city_rank: number
+          global_rank: number
+          green_points: number
+          name: string
+          profile_photo: string
+          state: string
+          state_rank: number
+          total_co2: number
+          total_distance: number
+          total_saved: number
+          total_trips: number
+          total_users: number
+          trust_score: number
+          user_id: string
+        }[]
+      }
+      _state_stats: {
+        Args: never
+        Returns: {
+          active_users: number
+          avg_co2: number
+          avg_saved: number
+          rank: number
+          state: string
+          total_co2: number
+          total_green_points: number
+          total_saved: number
+        }[]
+      }
       snapshot_rankings: { Args: never; Returns: undefined }
       sync_user_rank: { Args: { _user_id: string }; Returns: undefined }
     }
