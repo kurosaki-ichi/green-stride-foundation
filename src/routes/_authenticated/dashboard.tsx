@@ -124,6 +124,50 @@ function Dashboard() {
         />
       </div>
 
+      {tier && (
+        <div className="mt-3">
+          <Link to="/membership" className="block">
+            <TierCard current={tier.current} next={tier.next} progress={tier.progress} remaining={tier.remaining} compact />
+          </Link>
+        </div>
+      )}
+
+      {lastRedemption && (
+        <Link
+          to="/coupons"
+          className="mt-3 flex items-center gap-3 rounded-2xl bg-card p-3 shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)]"
+        >
+          <span className="rounded-lg bg-primary/10 p-2 text-primary"><Sparkles className="h-4 w-4" /></span>
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Recent redemption</p>
+            <p className="truncate text-sm font-semibold">{lastRedemption.rewards?.title ?? "Reward"}</p>
+          </div>
+          <span className="text-xs font-semibold text-destructive">−{lastRedemption.points_spent}</span>
+          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+        </Link>
+      )}
+
+      {featuredRewards.length > 0 && (
+        <section className="mt-5">
+          <div className="mb-2 flex items-center justify-between">
+            <h2 className="text-sm font-semibold">Available rewards</h2>
+            <Link to="/rewards" className="text-xs font-medium text-primary">See all →</Link>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            {featuredRewards.map((r) => (
+              <RewardCard
+                key={r.id} title={r.title} brand={r.brand} description={r.description}
+                cost={r.points_cost} balance={wallet?.balance ?? 0}
+                trending={r.trending} featured={r.featured} recommended={r.recommended}
+                remainingStock={r.reward_inventory?.remaining_stock ?? null}
+                imageUrl={r.image_url} categoryName={r.reward_categories?.name}
+                onClick={() => {}}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
       {nextChallenge && (
         <Link to="/challenges" className="mt-3 block rounded-2xl bg-card p-4 shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)]">
           <div className="flex items-center gap-3">
