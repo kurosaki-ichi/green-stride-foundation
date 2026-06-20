@@ -551,6 +551,137 @@ export type Database = {
           },
         ]
       }
+      demo_posts: {
+        Row: {
+          body: string
+          co2_saved: number
+          created_at: string
+          demo_user_id: string
+          id: string
+          like_count: number
+          type: string
+        }
+        Insert: {
+          body: string
+          co2_saved?: number
+          created_at?: string
+          demo_user_id: string
+          id?: string
+          like_count?: number
+          type?: string
+        }
+        Update: {
+          body?: string
+          co2_saved?: number
+          created_at?: string
+          demo_user_id?: string
+          id?: string
+          like_count?: number
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "demo_posts_demo_user_id_fkey"
+            columns: ["demo_user_id"]
+            isOneToOne: false
+            referencedRelation: "demo_users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      demo_users: {
+        Row: {
+          area: string
+          badge_count: number
+          bus_pct: number
+          car_pct: number
+          challenge_count: number
+          city: string
+          created_at: string
+          cycle_pct: number
+          ev_pct: number
+          green_points: number
+          home_lat: number | null
+          home_lng: number | null
+          id: string
+          latitude: number
+          longitude: number
+          metro_pct: number
+          name: string
+          profile_photo: string | null
+          state: string
+          total_co2: number
+          total_distance: number
+          total_saved: number
+          total_trips: number
+          trust_score: number
+          verified_pct: number
+          walk_pct: number
+          work_lat: number | null
+          work_lng: number | null
+        }
+        Insert: {
+          area: string
+          badge_count?: number
+          bus_pct?: number
+          car_pct?: number
+          challenge_count?: number
+          city: string
+          created_at?: string
+          cycle_pct?: number
+          ev_pct?: number
+          green_points?: number
+          home_lat?: number | null
+          home_lng?: number | null
+          id?: string
+          latitude: number
+          longitude: number
+          metro_pct?: number
+          name: string
+          profile_photo?: string | null
+          state: string
+          total_co2?: number
+          total_distance?: number
+          total_saved?: number
+          total_trips?: number
+          trust_score?: number
+          verified_pct?: number
+          walk_pct?: number
+          work_lat?: number | null
+          work_lng?: number | null
+        }
+        Update: {
+          area?: string
+          badge_count?: number
+          bus_pct?: number
+          car_pct?: number
+          challenge_count?: number
+          city?: string
+          created_at?: string
+          cycle_pct?: number
+          ev_pct?: number
+          green_points?: number
+          home_lat?: number | null
+          home_lng?: number | null
+          id?: string
+          latitude?: number
+          longitude?: number
+          metro_pct?: number
+          name?: string
+          profile_photo?: string | null
+          state?: string
+          total_co2?: number
+          total_distance?: number
+          total_saved?: number
+          total_trips?: number
+          trust_score?: number
+          verified_pct?: number
+          walk_pct?: number
+          work_lat?: number | null
+          work_lng?: number | null
+        }
+        Relationships: []
+      }
       follows: {
         Row: {
           created_at: string
@@ -882,6 +1013,7 @@ export type Database = {
           country: string | null
           created_at: string
           current_rank: number | null
+          eco_score: number
           email: string | null
           green_points: number
           home_address: string | null
@@ -893,6 +1025,7 @@ export type Database = {
           longitude: number | null
           name: string | null
           onboarding_complete: boolean
+          previous_rank: number | null
           primary_goal: string | null
           profile_photo: string | null
           state: string | null
@@ -912,6 +1045,7 @@ export type Database = {
           country?: string | null
           created_at?: string
           current_rank?: number | null
+          eco_score?: number
           email?: string | null
           green_points?: number
           home_address?: string | null
@@ -923,6 +1057,7 @@ export type Database = {
           longitude?: number | null
           name?: string | null
           onboarding_complete?: boolean
+          previous_rank?: number | null
           primary_goal?: string | null
           profile_photo?: string | null
           state?: string | null
@@ -942,6 +1077,7 @@ export type Database = {
           country?: string | null
           created_at?: string
           current_rank?: number | null
+          eco_score?: number
           email?: string | null
           green_points?: number
           home_address?: string | null
@@ -953,6 +1089,7 @@ export type Database = {
           longitude?: number | null
           name?: string | null
           onboarding_complete?: boolean
+          previous_rank?: number | null
           primary_goal?: string | null
           profile_photo?: string | null
           state?: string | null
@@ -1755,8 +1892,100 @@ export type Database = {
           viewer_liked: boolean
         }[]
       }
+      community_feed_v2: {
+        Args: { _limit?: number }
+        Returns: {
+          author_area: string
+          author_city: string
+          author_name: string
+          author_photo: string
+          body: string
+          co2_saved: number
+          created_at: string
+          id: string
+          is_demo: boolean
+          like_count: number
+          tier: string
+          user_id: string
+        }[]
+      }
+      compute_eco_score: {
+        Args: {
+          _challenges: number
+          _points: number
+          _saved: number
+          _trust: number
+          _verified_pct: number
+        }
+        Returns: number
+      }
       evaluate_badges: { Args: { _user_id: string }; Returns: undefined }
       expire_my_coupons: { Args: never; Returns: number }
+      globe_clusters: {
+        Args: never
+        Returns: {
+          avg_eco: number
+          city: string
+          lat: number
+          lng: number
+          state: string
+          total_saved: number
+          user_count: number
+        }[]
+      }
+      globe_points: {
+        Args: { _limit?: number }
+        Returns: {
+          area: string
+          city: string
+          eco_score: number
+          green_points: number
+          home_lat: number
+          home_lng: number
+          id: string
+          is_demo: boolean
+          lat: number
+          lng: number
+          name: string
+          state: string
+          tier: string
+          total_saved: number
+          trust_score: number
+          verified_pct: number
+          work_lat: number
+          work_lng: number
+        }[]
+      }
+      leaderboard_v2: {
+        Args: {
+          _area?: string
+          _city?: string
+          _filter?: string
+          _limit?: number
+          _scope?: string
+          _state?: string
+        }
+        Returns: {
+          area: string
+          challenge_count: number
+          city: string
+          eco_score: number
+          green_points: number
+          is_demo: boolean
+          name: string
+          previous_rank: number
+          profile_photo: string
+          rank: number
+          rank_change: number
+          state: string
+          tier: string
+          total_saved: number
+          total_trips: number
+          trust_score: number
+          user_id: string
+          verified_pct: number
+        }[]
+      }
       points_for_trip: {
         Args: {
           _distance: number
@@ -1764,6 +1993,7 @@ export type Database = {
         }
         Returns: number
       }
+      public_profile: { Args: { _user_id: string }; Returns: Json }
       recompute_challenges: { Args: { _user_id: string }; Returns: undefined }
       recompute_trust_score: { Args: { _user_id: string }; Returns: number }
       record_verification: {
@@ -1795,6 +2025,7 @@ export type Database = {
           title: string
         }[]
       }
+      seed_demo_universe: { Args: never; Returns: number }
       snapshot_rankings: { Args: never; Returns: undefined }
       spend_points: {
         Args: { _reward_id: string }
@@ -1855,6 +2086,11 @@ export type Database = {
       update_streak: {
         Args: { _date: string; _user_id: string }
         Returns: undefined
+      }
+      user_verified_pct: { Args: { _user_id: string }; Returns: number }
+      verification_tier: {
+        Args: { _trust: number; _verified_pct: number }
+        Returns: string
       }
     }
     Enums: {

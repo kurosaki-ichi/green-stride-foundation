@@ -135,7 +135,22 @@ function Dashboard() {
           areaAvg={Number(myArea?.avg_co2 ?? 0)}
           areaRank={myArea?.rank ?? null}
         />
+        <Link
+          to="/impact-globe"
+          className="block rounded-2xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-slate-900 p-4 text-white shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)]"
+        >
+          <div className="flex items-center gap-3">
+            <span className="rounded-xl bg-white/15 p-2 backdrop-blur"><Trophy className="h-4 w-4" /></span>
+            <div className="flex-1">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-white/70">New</p>
+              <p className="text-sm font-bold">Global Impact Globe</p>
+              <p className="text-[11px] text-white/80">See every user's sustainability impact on a live 3D Earth.</p>
+            </div>
+            <span className="text-xs font-semibold">Explore →</span>
+          </div>
+        </Link>
       </div>
+
 
       {tier && (
         <div className="mt-3">
