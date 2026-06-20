@@ -162,7 +162,7 @@ function Dashboard() {
                 trending={r.trending} featured={r.featured} recommended={r.recommended}
                 remainingStock={r.reward_inventory?.remaining_stock ?? null}
                 imageUrl={r.image_url} categoryName={r.reward_categories?.name}
-                onClick={() => {}}
+                onClick={() => navigate({ to: "/rewards" })}
               />
             ))}
           </div>
