@@ -22,14 +22,17 @@ import { Route as AuthenticatedRewardsRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedReferralsRouteImport } from './routes/_authenticated/referrals'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedMembershipRouteImport } from './routes/_authenticated/membership'
 import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
 import { Route as AuthenticatedEditProfileRouteImport } from './routes/_authenticated/edit-profile'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedCouponsRouteImport } from './routes/_authenticated/coupons'
 import { Route as AuthenticatedCommunityRouteImport } from './routes/_authenticated/community'
 import { Route as AuthenticatedChallengesRouteImport } from './routes/_authenticated/challenges'
 import { Route as AuthenticatedBadgesRouteImport } from './routes/_authenticated/badges'
 import { Route as AuthenticatedAnalyticsRouteImport } from './routes/_authenticated/analytics'
 import { Route as AuthenticatedAiCoachRouteImport } from './routes/_authenticated/ai-coach'
+import { Route as AuthenticatedCouponsIdRouteImport } from './routes/_authenticated/coupons.$id'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -96,6 +99,11 @@ const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
   path: '/onboarding',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMembershipRoute = AuthenticatedMembershipRouteImport.update({
+  id: '/membership',
+  path: '/membership',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedLeaderboardRoute =
   AuthenticatedLeaderboardRouteImport.update({
     id: '/leaderboard',
@@ -111,6 +119,11 @@ const AuthenticatedEditProfileRoute =
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCouponsRoute = AuthenticatedCouponsRouteImport.update({
+  id: '/coupons',
+  path: '/coupons',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedCommunityRoute = AuthenticatedCommunityRouteImport.update({
@@ -138,6 +151,11 @@ const AuthenticatedAiCoachRoute = AuthenticatedAiCoachRouteImport.update({
   path: '/ai-coach',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCouponsIdRoute = AuthenticatedCouponsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AuthenticatedCouponsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -149,9 +167,11 @@ export interface FileRoutesByFullPath {
   '/badges': typeof AuthenticatedBadgesRoute
   '/challenges': typeof AuthenticatedChallengesRoute
   '/community': typeof AuthenticatedCommunityRoute
+  '/coupons': typeof AuthenticatedCouponsRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/edit-profile': typeof AuthenticatedEditProfileRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
+  '/membership': typeof AuthenticatedMembershipRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/referrals': typeof AuthenticatedReferralsRoute
@@ -160,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/trips': typeof AuthenticatedTripsRoute
   '/verification': typeof AuthenticatedVerificationRoute
   '/wallet': typeof AuthenticatedWalletRoute
+  '/coupons/$id': typeof AuthenticatedCouponsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -171,9 +192,11 @@ export interface FileRoutesByTo {
   '/badges': typeof AuthenticatedBadgesRoute
   '/challenges': typeof AuthenticatedChallengesRoute
   '/community': typeof AuthenticatedCommunityRoute
+  '/coupons': typeof AuthenticatedCouponsRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/edit-profile': typeof AuthenticatedEditProfileRoute
   '/leaderboard': typeof AuthenticatedLeaderboardRoute
+  '/membership': typeof AuthenticatedMembershipRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/referrals': typeof AuthenticatedReferralsRoute
@@ -182,6 +205,7 @@ export interface FileRoutesByTo {
   '/trips': typeof AuthenticatedTripsRoute
   '/verification': typeof AuthenticatedVerificationRoute
   '/wallet': typeof AuthenticatedWalletRoute
+  '/coupons/$id': typeof AuthenticatedCouponsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -195,9 +219,11 @@ export interface FileRoutesById {
   '/_authenticated/badges': typeof AuthenticatedBadgesRoute
   '/_authenticated/challenges': typeof AuthenticatedChallengesRoute
   '/_authenticated/community': typeof AuthenticatedCommunityRoute
+  '/_authenticated/coupons': typeof AuthenticatedCouponsRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/edit-profile': typeof AuthenticatedEditProfileRoute
   '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
+  '/_authenticated/membership': typeof AuthenticatedMembershipRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/referrals': typeof AuthenticatedReferralsRoute
@@ -206,6 +232,7 @@ export interface FileRoutesById {
   '/_authenticated/trips': typeof AuthenticatedTripsRoute
   '/_authenticated/verification': typeof AuthenticatedVerificationRoute
   '/_authenticated/wallet': typeof AuthenticatedWalletRoute
+  '/_authenticated/coupons/$id': typeof AuthenticatedCouponsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -219,9 +246,11 @@ export interface FileRouteTypes {
     | '/badges'
     | '/challenges'
     | '/community'
+    | '/coupons'
     | '/dashboard'
     | '/edit-profile'
     | '/leaderboard'
+    | '/membership'
     | '/onboarding'
     | '/profile'
     | '/referrals'
@@ -230,6 +259,7 @@ export interface FileRouteTypes {
     | '/trips'
     | '/verification'
     | '/wallet'
+    | '/coupons/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -241,9 +271,11 @@ export interface FileRouteTypes {
     | '/badges'
     | '/challenges'
     | '/community'
+    | '/coupons'
     | '/dashboard'
     | '/edit-profile'
     | '/leaderboard'
+    | '/membership'
     | '/onboarding'
     | '/profile'
     | '/referrals'
@@ -252,6 +284,7 @@ export interface FileRouteTypes {
     | '/trips'
     | '/verification'
     | '/wallet'
+    | '/coupons/$id'
   id:
     | '__root__'
     | '/'
@@ -264,9 +297,11 @@ export interface FileRouteTypes {
     | '/_authenticated/badges'
     | '/_authenticated/challenges'
     | '/_authenticated/community'
+    | '/_authenticated/coupons'
     | '/_authenticated/dashboard'
     | '/_authenticated/edit-profile'
     | '/_authenticated/leaderboard'
+    | '/_authenticated/membership'
     | '/_authenticated/onboarding'
     | '/_authenticated/profile'
     | '/_authenticated/referrals'
@@ -275,6 +310,7 @@ export interface FileRouteTypes {
     | '/_authenticated/trips'
     | '/_authenticated/verification'
     | '/_authenticated/wallet'
+    | '/_authenticated/coupons/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -378,6 +414,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/membership': {
+      id: '/_authenticated/membership'
+      path: '/membership'
+      fullPath: '/membership'
+      preLoaderRoute: typeof AuthenticatedMembershipRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/leaderboard': {
       id: '/_authenticated/leaderboard'
       path: '/leaderboard'
@@ -397,6 +440,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/coupons': {
+      id: '/_authenticated/coupons'
+      path: '/coupons'
+      fullPath: '/coupons'
+      preLoaderRoute: typeof AuthenticatedCouponsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/community': {
@@ -434,8 +484,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAiCoachRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/coupons/$id': {
+      id: '/_authenticated/coupons/$id'
+      path: '/$id'
+      fullPath: '/coupons/$id'
+      preLoaderRoute: typeof AuthenticatedCouponsIdRouteImport
+      parentRoute: typeof AuthenticatedCouponsRoute
+    }
   }
 }
+
+interface AuthenticatedCouponsRouteChildren {
+  AuthenticatedCouponsIdRoute: typeof AuthenticatedCouponsIdRoute
+}
+
+const AuthenticatedCouponsRouteChildren: AuthenticatedCouponsRouteChildren = {
+  AuthenticatedCouponsIdRoute: AuthenticatedCouponsIdRoute,
+}
+
+const AuthenticatedCouponsRouteWithChildren =
+  AuthenticatedCouponsRoute._addFileChildren(AuthenticatedCouponsRouteChildren)
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAiCoachRoute: typeof AuthenticatedAiCoachRoute
@@ -443,9 +511,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedBadgesRoute: typeof AuthenticatedBadgesRoute
   AuthenticatedChallengesRoute: typeof AuthenticatedChallengesRoute
   AuthenticatedCommunityRoute: typeof AuthenticatedCommunityRoute
+  AuthenticatedCouponsRoute: typeof AuthenticatedCouponsRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedEditProfileRoute: typeof AuthenticatedEditProfileRoute
   AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
+  AuthenticatedMembershipRoute: typeof AuthenticatedMembershipRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedReferralsRoute: typeof AuthenticatedReferralsRoute
@@ -462,9 +532,11 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBadgesRoute: AuthenticatedBadgesRoute,
   AuthenticatedChallengesRoute: AuthenticatedChallengesRoute,
   AuthenticatedCommunityRoute: AuthenticatedCommunityRoute,
+  AuthenticatedCouponsRoute: AuthenticatedCouponsRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedEditProfileRoute: AuthenticatedEditProfileRoute,
   AuthenticatedLeaderboardRoute: AuthenticatedLeaderboardRoute,
+  AuthenticatedMembershipRoute: AuthenticatedMembershipRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedReferralsRoute: AuthenticatedReferralsRoute,
