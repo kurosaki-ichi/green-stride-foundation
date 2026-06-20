@@ -60,7 +60,11 @@ function ImpactGlobePage() {
 
     return () => {
       window.removeEventListener("resize", resize);
-      try { g._destructor && g._destructor(); } catch {}
+      try {
+        if (g._destructor) g._destructor();
+      } catch {
+        /* noop */
+      }
       if (containerRef.current) containerRef.current.innerHTML = "";
       globeRef.current = null;
     };
@@ -227,7 +231,12 @@ function ImpactGlobePage() {
                 </div>
               </div>
               <button
-                onClick={() => { setSelected(null); globeRef.current?.controls && (globeRef.current.controls().autoRotate = true); }}
+                onClick={() => {
+                  setSelected(null);
+                  if (globeRef.current?.controls) {
+                    globeRef.current.controls().autoRotate = true;
+                  }
+                }}
                 className="rounded-full p-1 hover:bg-muted"
               >
                 <X className="h-4 w-4" />
