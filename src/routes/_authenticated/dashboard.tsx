@@ -18,9 +18,12 @@ import { useProfile } from "@/hooks/use-profile";
 import { useStats, useWeeklyTrend, useTransportBreakdown } from "@/hooks/use-stats";
 import { useMyRanks, useRankHistory } from "@/hooks/use-rankings";
 import { useWallet, useStreak, useChallenges } from "@/hooks/use-gamification";
+import { useRewardsCatalog, useMyTier, useRedemptions } from "@/hooks/use-rewards";
 import { RankWidget } from "@/components/cards/RankWidget";
 import { TrustScoreCard } from "@/components/cards/TrustScoreCard";
 import { LocationInsightsCard } from "@/components/cards/LocationInsightsCard";
+import { TierCard } from "@/components/cards/TierCard";
+import { RewardCard } from "@/components/cards/RewardCard";
 import { useAreaStats } from "@/hooks/use-rankings";
 import { Progress } from "@/components/ui/progress";
 
